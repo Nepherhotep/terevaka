@@ -1,6 +1,6 @@
 module(..., package.seeall)
 
-require( 'terevaka/TKScreen' )
+local TKScreen = require( 'terevaka/TKScreen' )
 require( 'math' )
 
 -- TKApplication prototype
@@ -73,14 +73,14 @@ function TKApplication:onResume()
 end
 
 local app
-function get()
+function TKApplication:get()
    if app == nil then
       print('init application first!')
    end
    return app
 end
 
-function set(application)
+function TKApplication.set(application)
    app = application
 end
 

@@ -1,8 +1,8 @@
 module(..., package.seeall)
 
 
-require( 'terevaka/TKScreen')
-require( 'terevaka/TKTexturePackerUtil' )
+local TKScreen = require( 'terevaka/TKScreen')
+local TKTexturePackerUtil = require( 'terevaka/TKTexturePackerUtil' )
 
 
 function loadSpritePack(packName)
