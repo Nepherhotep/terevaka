@@ -73,14 +73,14 @@ function TKApplication:onResume()
 end
 
 local app
-function TKApplication:get()
+function TKApplication:getSharedApp()
    if app == nil then
       print('init application first!')
    end
    return app
 end
 
-function TKApplication:set(application)
+function TKApplication:setSharedApp(application)
    app = application
 end
 
