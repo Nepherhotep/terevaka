@@ -1,3 +1,7 @@
 module(..., package.seeall)
 
-display_helper = require('display_helper')
+TKScreen = require('terevaka/TKScreen')
+TKResourceManager = require('terevaka/TKResourceManager')
+TKApplication = require('terevaka/TKApplication')
+TKPropUtil = require('terevaka/TKPropUtil')
+TKTexturePackerUtil = require('terevaka/TKTexturePackerUtil')

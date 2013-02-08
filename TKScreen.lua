@@ -2,11 +2,11 @@ module(..., package.seeall)
 
 local math = require('math')
 
-
-local SCREEN_WIDTH = MOAIEnvironment.horizontalResolution or 480
-local SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 320
-local SCREEN_DPI = MOAIEnvironment.screenDpi or 160
 local DEFAULT_DPI = 160
+SCREEN_WIDTH = MOAIEnvironment.horizontalResolution or 480
+SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 320
+SCREEN_DPI = MOAIEnvironment.screenDpi or DEFAULT_DPI
+
 
 
 function viewport(desiredWidth, desiredHeight, scale)

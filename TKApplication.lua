@@ -1,11 +1,7 @@
 module(..., package.seeall)
 
-local messaging = require( 'messaging' )
-local display_helper = require( 'display_helper' )
-local resource_manager = require( 'resource_manager' )
-local math = require( 'math' )
-local prop_util = require( 'util/prop_util' )
-
+require( 'terevaka/TKScreen' )
+require( 'math' )
 
 -- TKApplication prototype
 TKApplication = {}
@@ -20,9 +16,8 @@ end
 
 function TKApplication:setupSim()
    -- Setup sim
-   self.screenWidth, self.screenHeight = display_helper.getScreenSize()
    local scale = MOAIEnvironment.simulatorScale or 1
-   MOAISim.openWindow ( "test", self.screenWidth/scale, self.screenHeight/scale )
+   MOAISim.openWindow ( "test", TKScreen.SCREEN_WIDTH/scale, TKScreen.SCREEN_HEIGHT/scale )
    
    -- Make graphics smooth
    MOAISim.setStep ( 1 / 60 )
@@ -32,7 +27,7 @@ function TKApplication:setupSim()
    MOAISim.setBoostThreshold ( 0 )
    
    -- Init viewport
-   self.__viewport = display_helper.viewport(self.screenWidth, self.screenHeight, scale)
+   self.__viewport = TKScreen.viewport(TKScreen.SCREEN_WIDTH, TKScreen.SCREEN_HEIGHT, scale)
 
    -- Subscribe touches
    self:subscribeTouches()
@@ -57,7 +52,7 @@ function TKApplication:loadScene(scene)
 end
 
 function TKApplication:subscribeTouches()
-   display_helper.subscribeTouches(
+   TKScreen.subscribeTouches(
       function(x, y)
 	 if self.currentScene then
 	    self.currentScene:onTouch(x, y)

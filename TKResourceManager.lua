@@ -1,17 +1,17 @@
 module(..., package.seeall)
 
 
-local display_helper = require( 'display_helper')
-local texturepacker_loader = require( 'util/texturepacker_util' )
+require( 'terevaka/TKScreen')
+require( 'terevaka/TKTexturePackerUtil' )
 
 
 function loadSpritePack(packName)
-   local modifier, modifierDpi = getModifier(display_helper.getScreenDpi())
+   local modifier, modifierDpi = getModifier(TKScreen.SCREEN_DPI)
    local resourceDir = 'res/drawable-'..modifier..'/'
    local png = resourceDir..packName..'.png'
    local spec = resourceDir..packName..'.lua'
    local pack = {}
-   pack.quads, pack.spriteNames = texturepacker_loader.load(spec, png)
+   pack.quads, pack.spriteNames = TKTexturePackerUtil.load(spec, png)
    pack.dpi = modifierDpi
    return pack
 end
