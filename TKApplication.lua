@@ -73,7 +73,7 @@ function TKApplication:onStart()
    -- nothing to do yet
 end
 
-function MyTKApplication:onResume()
+function TKApplication:onResume()
   -- nothing to do yet
 end
 
