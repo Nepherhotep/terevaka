@@ -80,7 +80,7 @@ function TKApplication:get()
    return app
 end
 
-function TKApplication.set(application)
+function TKApplication:set(application)
    app = application
 end
 
