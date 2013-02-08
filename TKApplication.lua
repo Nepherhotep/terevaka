@@ -7,18 +7,18 @@ local math = require( 'math' )
 local prop_util = require( 'util/prop_util' )
 
 
--- Application prototype
-Application = {}
+-- TKApplication prototype
+TKApplication = {}
 
--- Application constructor
-function Application:new (o)
+-- TKApplication constructor
+function TKApplication:new (o)
    o = o or {}
    setmetatable(o, self)
    self.__index = self
    return o
 end
 
-function Application:setupSim()
+function TKApplication:setupSim()
    -- Setup sim
    self.screenWidth, self.screenHeight = display_helper.getScreenSize()
    local scale = MOAIEnvironment.simulatorScale or 1
@@ -38,7 +38,7 @@ function Application:setupSim()
    self:subscribeTouches()
 end
 
-function Application:initWithScene(scene)
+function TKApplication:initWithScene(scene)
    -- User constructor
    self:setupSim()
    self:onCreate()
@@ -47,7 +47,7 @@ function Application:initWithScene(scene)
    self:onResume()
 end
 
-function Application:loadScene(scene)
+function TKApplication:loadScene(scene)
    self.currentScene = scene
    for i, layer in ipairs(scene:getLayers()) do
       layer:setViewport(self.__viewport)
@@ -56,7 +56,7 @@ function Application:loadScene(scene)
    scene:onSceneLoaded()
 end
 
-function Application:subscribeTouches()
+function TKApplication:subscribeTouches()
    display_helper.subscribeTouches(
       function(x, y)
 	 if self.currentScene then
@@ -65,15 +65,15 @@ function Application:subscribeTouches()
       end)
 end
 
-function Application:onCreate()
+function TKApplication:onCreate()
    -- nothing to do yet
 end
 
-function Application:onStart()
+function TKApplication:onStart()
    -- nothing to do yet
 end
 
-function MyApplication:onResume()
+function MyTKApplication:onResume()
   -- nothing to do yet
 end
 
@@ -89,3 +89,4 @@ function set(application)
    app = application
 end
 
+return TKApplication
