@@ -22,9 +22,7 @@ function TKApplication:setupSim()
    -- Make graphics smooth
    MOAISim.setStep ( 1 / 60 )
    MOAISim.clearLoopFlags ()
-   MOAISim.setLoopFlags ( MOAISim.SIM_LOOP_ALLOW_BOOST )
-   MOAISim.setLoopFlags ( MOAISim.SIM_LOOP_LONG_DELAY )
-   MOAISim.setBoostThreshold ( 0 )
+   MOAISim.setLoopFlags( MOAISim.LOOP_FLAGS_FIXED )
    
    -- Init viewport
    self.__viewport = TKScreen.viewport(TKScreen.SCREEN_WIDTH, TKScreen.SCREEN_HEIGHT, scale)
