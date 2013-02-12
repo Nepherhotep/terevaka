@@ -25,7 +25,7 @@ function TKApplication:setupSim()
    MOAISim.setLoopFlags( MOAISim.LOOP_FLAGS_FIXED )
    
    -- Init viewport
-   self.__viewport = TKScreen.viewport(TKScreen.SCREEN_WIDTH, TKScreen.SCREEN_HEIGHT, scale)
+   self.viewport = TKScreen.viewport(TKScreen.SCREEN_WIDTH, TKScreen.SCREEN_HEIGHT, scale)
 
    -- Subscribe touches
    self:subscribeTouches()
@@ -43,7 +43,7 @@ end
 function TKApplication:loadScene(scene)
    self.currentScene = scene
    for i, layer in ipairs(scene:getLayers()) do
-      layer:setViewport(self.__viewport)
+      layer:setViewport(self.viewport)
       MOAISim.pushRenderPass ( layer )
    end
    scene:onSceneLoaded()
