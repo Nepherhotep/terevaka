@@ -4,6 +4,8 @@ module(..., package.seeall)
 local TKScreen = require( 'terevaka/TKScreen')
 local TKTexturePackerUtil = require( 'terevaka/TKTexturePackerUtil' )
 
+local layoutFileNameCache = {}
+
 
 function loadSpritePack(packName)
    local modifier, modifierDpi = getModifier(TKScreen.SCREEN_DPI)
@@ -16,6 +18,14 @@ function loadSpritePack(packName)
    return pack
 end
 
+function findLayoutFile(layoutName)
+   cached = layoutFileNameCache[layoutName]
+   if cached then
+      return cached
+   else
+      return nil
+   end
+end
 
 function getModifier(dpi)
    if dpi <= 160 then
