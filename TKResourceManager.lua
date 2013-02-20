@@ -7,7 +7,7 @@ local TKTexturePackerUtil = require( 'terevaka/TKTexturePackerUtil' )
 local layoutFileNameCache = {}
 
 
-function loadSpritePack(packName)
+function loadTexturePack(packName)
    local modifier, modifierDpi = getModifier(TKScreen.SCREEN_DPI)
    local resourceDir = 'res/drawable-'..modifier..'/'
    local png = resourceDir..packName..'.png'
