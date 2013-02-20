@@ -19,12 +19,9 @@ function loadTexturePack(packName)
 end
 
 function findLayoutFile(layoutName)
-   cached = layoutFileNameCache[layoutName]
-   if cached then
-      return cached
-   else
-      return nil
-   end
+   -- Currently it only forms full path
+   -- Searching with prefixes and caching implied in future
+   return 'res/layout/'..layoutName..'.lua'
 end
 
 function getModifier(dpi)
