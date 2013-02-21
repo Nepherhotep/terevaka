@@ -59,3 +59,8 @@ Application onCreate/onStart/onResume methods
 --------
 
 They a done as a prototype. All of them are called on application start. onPause/onResume events are not implemented yet, but will be added in the nearest future.
+
+Sample
+--------
+
+For more help see https://github.com/Nepherhotep/terevaka-samples
