@@ -40,7 +40,7 @@ Attention! Both of mdpi and xhdpi texture packs required.
 terevaka.TKScreen
 ---------
 
-Two the most important functions of the framework dipToPix and pixToDip. They convert coordinates from dips to scene and vice versa.
+Two the most important functions of the framework are dipToPix and pixToDip. They convert coordinates from dips to scene and vice versa.
 
 
 terevaka.TKScene
