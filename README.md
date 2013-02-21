@@ -16,7 +16,7 @@ Also you could notice that many things implemented in a way you already saw in A
 Installation
 ---------
 
-Copy (or clone, or submodule) terevaka into your moai directory.
+Copy (or clone, or submodule) terevaka into your moai application directory.
 Then just import
 ```local terevaka = require('terevaka/terevaka')```
 
