@@ -18,6 +18,8 @@ function TKApplication:setupSim()
    -- Setup sim
    local scale = MOAIEnvironment.simulatorScale or 1
    MOAISim.openWindow ( "test", TKScreen.SCREEN_WIDTH/scale, TKScreen.SCREEN_HEIGHT/scale )
+   MOAISim.setListener(MOAISim.EVENT_RESUME, function() self:onResume() end)
+   MOAISim.setListener(MOAISim.EVENT_PAUSE, function() self:onPause() end)
    
    -- Make graphics smooth
    MOAISim.setStep ( 1 / 60 )
@@ -36,8 +38,6 @@ function TKApplication:initWithScene(scene)
    self:setupSim()
    self:onCreate()
    self:loadScene(scene)
-   self:onStart()
-   self:onResume()
 end
 
 function TKApplication:loadScene(scene)
@@ -62,7 +62,7 @@ function TKApplication:onCreate()
    -- nothing to do yet
 end
 
-function TKApplication:onStart()
+function TKApplication:onPause()
    -- nothing to do yet
 end
 
