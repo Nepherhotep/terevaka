@@ -15,15 +15,15 @@ function TKScene:new (o)
    return o
 end
 
-function TKScene:fillLayer(layer, texturePack, resourceName)
+function TKScene:fillLayer(layer, resourceName, texturePack)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
    for i, propTable in ipairs(resource) do
-      self:addProp(layer, texturePack, propTable)
+      self:addProp(layer, propTable, texturePack)
    end
 end
 
-function TKScene:addProp(layer, texturePack, propTable)
+function TKScene:addProp(layer, propTable, texturePack)
    local prop = MOAIProp2D.new ()
    prop:setDeck ( texturePack.quads )
    prop:setIndex ( texturePack.spriteNames[propTable.name] )
