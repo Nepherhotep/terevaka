@@ -7,6 +7,14 @@ SCREEN_WIDTH = MOAIEnvironment.horizontalResolution or 480
 SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 320
 SCREEN_DPI = MOAIEnvironment.screenDpi or DEFAULT_DPI
 
+-- Trunk dpi to prevent stairs-like scaling
+if(SCREEN_DPI <= 170 )then
+   SCREEN_DPI = 160
+end
+
+if((SCREEN_DPI > 300) and (SCREEN_DPI < 340))then
+   SCREEN_DPI = 320
+end
 
 
 function viewport(desiredWidth, desiredHeight, scale)
