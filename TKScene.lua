@@ -12,15 +12,36 @@ function TKScene:new (o)
    o = o or {}
    setmetatable(o, self)
    self.__index = self
+   self.viewCache = nil
    return o
 end
 
 function TKScene:fillLayer(layer, resourceName, texturePack)
+   self:touchCacheTable(resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
    for i, propTable in ipairs(resource) do
-      self:addProp(layer, propTable, texturePack)
+      self.viewCache[resourceName][propTable.uid] = self:addProp(layer, propTable, texturePack)
    end
+end
+
+function TKScene:touchCacheTable(resourceName)
+   -- Create cache table if it doesn't exist
+   if self.viewCache == nil then
+      self.viewCache = {}
+   end
+   if self.viewCache[resourceName] == nil then
+      self.viewCache[resourceName] = {}
+   end
+end
+
+function TKScene:findViewById(layerResourceName, viewId)
+   if self.viewCache ~= nil then
+      if self.viewCache[layerResourceName] ~= nil then
+	 return self.viewCache[layerResourceName][viewId]
+      end
+   end
+   return nil
 end
 
 function TKScene:addProp(layer, propTable, texturePack)
