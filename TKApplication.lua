@@ -43,11 +43,16 @@ end
 
 function TKApplication:loadScene(scene)
    self.currentScene = scene
-   for i, layer in ipairs(scene:getLayers()) do
+   for i, layer in ipairs(scene:getRenderTable()) do
       layer:setViewport(self.viewport)
       MOAISim.pushRenderPass ( layer )
    end
-   scene:onSceneLoaded()
+   scene:onLoadScene()
+end
+
+function TKApplication:replaceScene(scene)
+   self.currentScene:onRemoveScene()
+   self:loadScene(scene)
 end
 
 function TKApplication:subscribeTouches()

@@ -56,13 +56,17 @@ function TKScene:clear()
 end
 
 -- protocol for Terevaka.TKApplication
-function TKScene:getLayers()
+function TKScene:getRenderTable()
    print('Override TKScene:getLayers()')
    return {}
 end
 
-function TKScene:onSceneLoaded()
-   print('Override TKScene:onSceneLoaded()')
+function TKScene:onLoadScene()
+   print('Override TKScene:onLoadScene()')
+end
+
+function TKScene:onRemoveScene()
+   print('Override TKScene:onRemoveScene()')
 end
 
 function TKScene:onTouch(x, y)
