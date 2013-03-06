@@ -43,10 +43,10 @@ end
 
 function TKApplication:loadScene(scene)
    self.currentScene = scene
-   for i, layer in ipairs(scene:getRenderTable()) do
+   for i, layer in pairs(scene:getRenderTable())do
       layer:setViewport(self.viewport)
-      MOAISim.pushRenderPass ( layer )
    end
+   MOAIRenderMgr.setRenderTable(scene:getRenderTable())
    scene:onLoadScene()
 end
 
