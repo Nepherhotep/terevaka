@@ -21,7 +21,7 @@ function TKScene:fillLayer(layer, resourceName, texturePack)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
    for i, propTable in ipairs(resource) do
-      self.viewCache[resourceName][propTable.uid] = self:addProp(layer, propTable, texturePack)
+      self:cacheView(resourceName, propTable.uid, self:addProp(layer, propTable, texturePack))
    end
 end
 
@@ -32,6 +32,12 @@ function TKScene:touchCacheTable(resourceName)
    end
    if self.viewCache[resourceName] == nil then
       self.viewCache[resourceName] = {}
+   end
+end
+
+function TKScene:cacheView(resourceName, viewId, view)
+   if viewId ~= "" or viewId ~= nil then
+      self.viewCache[resourceName][viewId] = view
    end
 end
 
