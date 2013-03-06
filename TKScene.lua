@@ -49,6 +49,11 @@ function TKScene:addProp(layer, propTable, texturePack)
    return prop
 end
 
+function TKScene:clear()
+   for i, layer in ipairs(self:getLayers()) do
+      layer:clear()
+   end
+end
 
 -- protocol for Terevaka.TKApplication
 function TKScene:getLayers()

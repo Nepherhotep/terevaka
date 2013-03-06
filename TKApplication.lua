@@ -38,6 +38,7 @@ function TKApplication:initWithScene(scene)
    self:setupSim()
    self:onCreate()
    self:loadScene(scene)
+   self:onResume()
 end
 
 function TKApplication:loadScene(scene)
