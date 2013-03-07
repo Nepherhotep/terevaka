@@ -21,7 +21,7 @@ function TKScene:fillLayer(params)
    texturePack = params['texturePack']
    resourceName = params['resourceName']
    layer = params['layer']
-   self:touchCacheTable(resourceName)
+   self:updateCacheTable(resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
    for i, propTable in ipairs(resource) do
@@ -30,7 +30,7 @@ function TKScene:fillLayer(params)
    end
 end
 
-function TKScene:touchCacheTable(resourceName)
+function TKScene:updateCacheTable(resourceName)
    -- Create cache table if it doesn't exist
    if self.viewCache == nil then
       self.viewCache = {}
@@ -53,6 +53,15 @@ function TKScene:findPropById(layerResourceName, viewId)
       end
    end
    return nil
+end
+
+function TKScene:handleTouch(layer, event)
+   local prop = self.layer:getPartition():propForPoint(self.layer:wndToWorld(event.wndX, event.wndY))
+   if prop then
+      if prop.onTouch then
+	 prop:onTouch(event)
+      end
+   end
 end
 
 function TKScene:addProp(params)
