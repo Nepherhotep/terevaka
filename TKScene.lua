@@ -16,7 +16,11 @@ function TKScene:new (o)
    return o
 end
 
-function TKScene:fillLayer(layer, resourceName, texturePack)
+function TKScene:fillLayer(options)
+   -- Unpack options
+   texturePack = options['texturePack']
+   resourceName = options['resourceName']
+   layer = options['layer']
    self:touchCacheTable(resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
