@@ -2,6 +2,8 @@ module(..., package.seeall)
 
 local math = require('math')
 
+local TKTapEvent = require( 'terevaka/TKTapEvent')
+
 local DEFAULT_DPI = 160
 SCREEN_WIDTH = MOAIEnvironment.horizontalResolution or 480
 SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 320
@@ -72,14 +74,18 @@ function scaleProp(prop, dpi)
    prop:setScl( SCREEN_DPI / fromDpi )
 end
 
+
 function subscribeTouches(handleClickOrTouch)
    local scale = MOAIEnvironment.simulatorScale or 1
    if MOAIInputMgr.device.pointer then
       MOAIInputMgr.device.mouseLeft:setCallback(
 	 function(isMouseDown)
             if(isMouseDown) then
+	       event = TKTapEvent:new()
 	       x, y = MOAIInputMgr.device.pointer:getLoc()
-	       handleClickOrTouch(pxToDip(x*scale, y*scale, false, true))
+	       event.wndX, event.wndY = x, y
+	       event.dipX, event.dipY = pxToDip(x*scale, y*scale, false, true)
+	       handleClickOrTouch(event)
             end
             -- Do nothing on mouseUp
 	 end)
@@ -88,7 +94,11 @@ function subscribeTouches(handleClickOrTouch)
       MOAIInputMgr.device.touch:setCallback (
 	 function ( eventType, idx, x, y, tapCount )
             if eventType == MOAITouchSensor.TOUCH_DOWN then
-	       handleClickOrTouch(pxToDip(x*scale, y*scale, false, true))
+	       event = TKTapEvent:new()
+	       x, y = MOAIInputMgr.device.pointer:getLoc()
+	       event.wndX, event.wndY = x, y 
+	       event.dipX, event.dipY = pxToDip(x*scale, y*scale, false, true)
+	       handleClickOrTouch(event)
             end
 	 end)
    end

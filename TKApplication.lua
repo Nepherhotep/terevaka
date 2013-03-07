@@ -57,9 +57,9 @@ end
 
 function TKApplication:subscribeTouches()
    TKScreen.subscribeTouches(
-      function(x, y)
+      function(dipX, dipY, rawX, rawY)
 	 if self.currentScene then
-	    self.currentScene:onTouch(x, y)
+	    self.currentScene:onTouch(dipX, dipY, rawX, rawY)
 	 end
       end)
 end

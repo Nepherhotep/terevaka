@@ -41,7 +41,7 @@ function TKScene:cacheView(resourceName, viewId, view)
    end
 end
 
-function TKScene:findViewById(layerResourceName, viewId)
+function TKScene:findPropById(layerResourceName, viewId)
    if self.viewCache ~= nil then
       if self.viewCache[layerResourceName] ~= nil then
 	 return self.viewCache[layerResourceName][viewId]
@@ -96,8 +96,8 @@ function TKScene:onRemoveScene()
    print('Override TKScene:onRemoveScene()')
 end
 
-function TKScene:onTouch(x, y)
-   print('Override TKScene:onTouch(x, y) method')
+function TKScene:onTouch(event)
+   print('Override TKScene:onTouch(event) method')
 end
 
 return TKScene
