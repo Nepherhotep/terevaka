@@ -40,7 +40,7 @@ function TKScene:touchCacheTable(resourceName)
 end
 
 function TKScene:cacheView(resourceName, viewId, view)
-   if viewId ~= "" or viewId ~= nil then
+   if viewId ~= "" and viewId ~= nil then
       self.viewCache[resourceName][viewId] = view
    end
 end
