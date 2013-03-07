@@ -16,16 +16,17 @@ function TKScene:new (o)
    return o
 end
 
-function TKScene:fillLayer(options)
+function TKScene:fillLayer(params)
    -- Unpack options
-   texturePack = options['texturePack']
-   resourceName = options['resourceName']
-   layer = options['layer']
+   texturePack = params['texturePack']
+   resourceName = params['resourceName']
+   layer = params['layer']
    self:touchCacheTable(resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
    for i, propTable in ipairs(resource) do
-      self:cacheView(resourceName, propTable.uid, self:addProp(layer, propTable, texturePack))
+      local prop = self:addProp({layer = layer, propTable = propTable, texturePack = texturePack})
+      self:cacheView(resourceName, propTable.uid, prop)
    end
 end
 
@@ -54,7 +55,10 @@ function TKScene:findPropById(layerResourceName, viewId)
    return nil
 end
 
-function TKScene:addProp(layer, propTable, texturePack)
+function TKScene:addProp(params)
+   layer = params['layer']
+   propTable = params['propTable']
+   texturePack = params['texturePack']
    local prop = MOAIProp2D.new ()
    prop:setDeck ( texturePack.quads )
    prop:setIndex ( texturePack.spriteNames[propTable.name] )
