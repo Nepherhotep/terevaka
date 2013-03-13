@@ -24,7 +24,7 @@ function TKScene:fillLayer(params)
    self:updateCacheTable(resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
-   for i, propTable in ipairs(resource) do
+   for i, propTable in ipairs(resource.props) do
       local prop = self:addProp({layer = layer, propTable = propTable, texturePack = texturePack})
       self:cacheView(resourceName, propTable.uid, prop)
    end
