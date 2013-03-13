@@ -33,7 +33,7 @@ end
 
 function TKScene:fillScalableLayout(resourceName, resource, layer, texturePack)
    local scaleFactor = TKScreen.SCREEN_HEIGHT / resource.layout_height
-   print( 'scaleFactor', scaleFactor, TKScreen.SCREEN_HEIGHT, resource.layout_height )
+   print('scale debut', scaleFactor, texturePack.dpi)
    local deltaX
    if resource.layout_h_align == 'center' then
       deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * resource.layout_width)/2
@@ -79,8 +79,9 @@ function TKScene:fillScalableLayout(resourceName, resource, layer, texturePack)
       
       prop:setLoc ( x, y )
       prop:setScl( scaleFactor )
-      layer:insertProp ( prop )
-      self:cacheView(resourceName, propTable.uid, prop)
+--      TKScreen.scaleProp( prop, texturePack.dpi, scaleFactor )
+      layer:insertProp( prop )
+      self:cacheView( resourceName, propTable.uid, prop )
    end
 end
 

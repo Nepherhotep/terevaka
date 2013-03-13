@@ -10,7 +10,7 @@ SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 320
 SCREEN_DPI = MOAIEnvironment.screenDpi or DEFAULT_DPI
 
 -- Trunk dpi to prevent stairs-like scaling
-if(SCREEN_DPI <= 170 )then
+if (SCREEN_DPI >= 150) and (SCREEN_DPI <= 170 ) then
    SCREEN_DPI = 160
 end
 
@@ -71,7 +71,8 @@ end
 
 function scaleProp(prop, dpi)
    fromDpi = dpi or DEFAULT_DPI
-   prop:setScl( SCREEN_DPI / fromDpi )
+   scale = SCREEN_DPI / fromDpi
+   prop:setScl( scale )
 end
 
 function subscribeTouches(handleClickOrTouch)
