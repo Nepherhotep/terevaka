@@ -21,16 +21,77 @@ function TKScene:fillLayer(params)
    texturePack = params['texturePack']
    resourceName = params['resourceName']
    layer = params['layer']
-   self:updateCacheTable(resourceName)
+   self:updateViewCacheTable(resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
+   if resource.layout_type == 'elastic' then
+      self:fillElasticLayout(resourceName, resource, layer, texturePack)
+   else
+      self:fillScalableLayout(resourceName, resource, layer, texturePack)
+   end
+end
+
+function TKScene:fillScalableLayout(resourceName, resource, layer, texturePack)
+   local scaleFactor = TKScreen.SCREEN_HEIGHT / resource.layout_height
+   print( 'scaleFactor', scaleFactor, TKScreen.SCREEN_HEIGHT, resource.layout_height )
+   local deltaX
+   if resource.layout_h_align == 'center' then
+      deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * resource.layout_width)/2
+   else
+      if resource.layout_h_align == 'left' then
+	 deltaX = 0
+      else
+	 deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * resource.layout_width)
+      end
+   end
+
+   for i, propTable in ipairs(resource.props) do
+      local prop = MOAIProp2D.new ()
+      prop:setDeck(texturePack.quads)
+      prop:setIndex(texturePack.spriteNames[propTable.name])
+      
+      if propTable.x_unit == '%' then
+	 if propTable.align_left then
+	    x = deltaX + scaleFactor * resource.layout_width * propTable.x / 100
+	 else
+	    x = deltaX + scaleFactor * resource.layout_width * (100 - propTable.x) / 100
+	 end
+      else
+	 if propTable.align_left then
+	    x = deltaX + scaleFactor * propTable.x
+	 else
+	    x = deltaX + scaleFactor * ( resource.layout_width - propTable.x)
+	 end
+      end
+      if propTable.y_unit == '%' then
+	 if propTable.align_bottom then
+	    y = TKScreen.SCREEN_HEIGHT * propTable.y / 100
+	 else
+	    y = TKScreen.SCREEN_HEIGHT * (100 - propTable.y) / 100
+	 end
+      else
+	 if propTable.align_bottom then
+	    y = scaleFactor * propTable.y
+	 else
+	    y = TKScreen.SCREEN_HEIGHT - scaleFactor * propTable.y
+	 end
+      end
+      
+      prop:setLoc ( x, y )
+      prop:setScl( scaleFactor )
+      layer:insertProp ( prop )
+      self:cacheView(resourceName, propTable.uid, prop)
+   end
+end
+
+function TKScene:fillElasticLayout(resourceName, resource, layer, texturePack)
    for i, propTable in ipairs(resource.props) do
       local prop = self:addProp({layer = layer, propTable = propTable, texturePack = texturePack})
       self:cacheView(resourceName, propTable.uid, prop)
    end
 end
 
-function TKScene:updateCacheTable(resourceName)
+function TKScene:updateViewCacheTable(resourceName)
    -- Create cache table if it doesn't exist
    if self.viewCache == nil then
       self.viewCache = {}

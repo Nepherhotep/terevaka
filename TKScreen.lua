@@ -74,7 +74,6 @@ function scaleProp(prop, dpi)
    prop:setScl( SCREEN_DPI / fromDpi )
 end
 
-
 function subscribeTouches(handleClickOrTouch)
    local scale = MOAIEnvironment.simulatorScale or 1
    if MOAIInputMgr.device.pointer then
