@@ -4,7 +4,7 @@ local math = require('math')
 
 local TKTapEvent = require( 'terevaka/TKTapEvent')
 
-local DEFAULT_DPI = 160
+DEFAULT_DPI = 160
 SCREEN_WIDTH = MOAIEnvironment.horizontalResolution or 480
 SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 320
 SCREEN_DPI = MOAIEnvironment.screenDpi or DEFAULT_DPI
@@ -17,7 +17,6 @@ end
 if((SCREEN_DPI > 300) and (SCREEN_DPI < 340))then
    SCREEN_DPI = 320
 end
-
 
 function viewport(desiredWidth, desiredHeight, scale)
    -- Setup viewport
