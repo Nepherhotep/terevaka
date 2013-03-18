@@ -136,8 +136,13 @@ function TKScene:addProp(params)
    propTable = params['propTable']
    texturePack = params['texturePack']
    local prop = MOAIProp2D.new ()
-   prop:setDeck ( texturePack.quads )
-   prop:setIndex ( texturePack.spriteNames[propTable.name] )
+   local dpi
+
+   if texturePack then
+      prop:setDeck ( texturePack.quads )
+      prop:setIndex ( texturePack.spriteNames[propTable.name] )
+      dpi = texturePack.dpi
+   end
    
    local x, y = TKScreen.dipToPx(propTable.x, propTable.y, not propTable.align_left, not propTable.align_bottom )
    if propTable.x_unit == '%' then
@@ -155,7 +160,7 @@ function TKScene:addProp(params)
       end
    end
    prop:setLoc ( x, y )
-   scaleProp( prop, texturePack.dpi)
+   scaleProp( prop, dpi)
    layer:insertProp ( prop )
    return prop
 end
