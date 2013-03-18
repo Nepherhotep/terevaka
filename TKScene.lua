@@ -154,19 +154,22 @@ function TKScene:handleTouch(layer, event)
 end
 
 function TKScene:addProp(params)
-   layer = params['layer']
-   propTable = params['propTable']
-   texturePack = params['texturePack']
-   local prop = MOAIProp2D.new ()
-   local dpi
-
+   local layer = params['layer']
+   local propTable = params['propTable']
+   local texturePack = params['texturePack']
+   local deck, dpi, index
    if texturePack then
-      prop:setDeck ( texturePack.quads )
-      prop:setIndex ( texturePack.spriteNames[propTable.name] )
+      deck = texturePack.quads
+      index = texturePack.spriteNames[propTable.name]
       dpi = texturePack.dpi
+   else
+      deck = params.deck
+      index = params.index
+      dpi = params.resourceDpi
    end
-      
-   
+   local prop = MOAIProp2D.new ()
+   prop:setDeck ( deck )
+   prop:setIndex ( index )
    local x, y = TKScreen.dipToPx(propTable.x, propTable.y, not propTable.align_left, not propTable.align_bottom )
    if propTable.x_unit == '%' then
       if propTable.align_left then
