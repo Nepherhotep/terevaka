@@ -66,42 +66,50 @@ function TKScene:fillScalableLayout(resourceName, resource, layer, texturePack)
 end
 
 function TKScene:addScalableProp(params)
+   -- extract params
    local propTable = params.propTable
-   local scaleFactor = TKScreen.SCREEN_HEIGHT / params.layout_height
+   local layout_height = params.layout_height
+   local layout_width = params.layout_width
+   local resourceDpi = params.resourceDpi
    local horizontalOffset = params.horizontalOffset
-      local prop = MOAIProp2D.new ()
-      prop:setDeck(params.deck)
-      prop:setIndex(params.index)
-      if propTable.x_unit == '%' then
-	 if propTable.align_left then
-	    x = horizontalOffset + scaleFactor * params.layout_width * propTable.x / 100
-	 else
-	    x = horizontalOffset + scaleFactor * params.layout_width * (100 - propTable.x) / 100
-	 end
+   local deck = params.deck
+   local index = params.index
+
+   -- do method
+   local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
+   local prop = MOAIProp2D.new ()
+   prop:setDeck(deck)
+   prop:setIndex(index)
+   if propTable.x_unit == '%' then
+      if propTable.align_left then
+	 x = horizontalOffset + scaleFactor * layout_width * propTable.x / 100
       else
-	 if propTable.align_left then
-	    x = horizontalOffset + scaleFactor * propTable.x
-	 else
-	    x = horizontalOffset + scaleFactor * ( params.layout_width - propTable.x)
-	 end
+	 x = horizontalOffset + scaleFactor * layout_width * (100 - propTable.x) / 100
       end
-      if propTable.y_unit == '%' then
-	 if propTable.align_bottom then
-	    y = TKScreen.SCREEN_HEIGHT * propTable.y / 100
-	 else
-	    y = TKScreen.SCREEN_HEIGHT * (100 - propTable.y) / 100
-	 end
+   else
+      if propTable.align_left then
+	 x = horizontalOffset + scaleFactor * propTable.x
       else
-	 if propTable.align_bottom then
-	    y = scaleFactor * propTable.y
-	 else
-	    y = TKScreen.SCREEN_HEIGHT - scaleFactor * propTable.y
-	 end
+	 x = horizontalOffset + scaleFactor * ( layout_width - propTable.x)
       end
-      prop:setLoc ( x, y )
-      prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / params.resourceDpi)
-      layer:insertProp( prop )
-      self:cacheView( resourceName, propTable.uid, prop )
+   end
+   if propTable.y_unit == '%' then
+      if propTable.align_bottom then
+	 y = TKScreen.SCREEN_HEIGHT * propTable.y / 100
+      else
+	 y = TKScreen.SCREEN_HEIGHT * (100 - propTable.y) / 100
+      end
+   else
+      if propTable.align_bottom then
+	 y = scaleFactor * propTable.y
+      else
+	 y = TKScreen.SCREEN_HEIGHT - scaleFactor * propTable.y
+      end
+   end
+   prop:setLoc ( x, y )
+   prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / resourceDpi)
+   layer:insertProp( prop )
+   self:cacheView( resourceName, propTable.uid, prop )
 end
 
 function TKScene:fillElasticLayout(resourceName, resource, layer, texturePack)
