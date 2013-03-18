@@ -154,10 +154,13 @@ function TKScene:handleTouch(layer, event)
 end
 
 function TKScene:addProp(params)
+   -- extract params
    local layer = params['layer']
    local propTable = params['propTable']
    local texturePack = params['texturePack']
    local deck, dpi, index
+
+   -- extract deck, index, dpi depending on resource type - texturePack or single resource
    if texturePack then
       deck = texturePack.quads
       index = texturePack.spriteNames[propTable.name]
