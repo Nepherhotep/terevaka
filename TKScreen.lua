@@ -68,12 +68,6 @@ function dipToPx(x, y, alignRight, alignTop)
    return outX, outY
 end
 
-function scaleProp(prop, dpi)
-   fromDpi = dpi or DEFAULT_DPI
-   scale = SCREEN_DPI / fromDpi
-   prop:setScl( scale )
-end
-
 function subscribeTouches(handleClickOrTouch)
    local scale = MOAIEnvironment.simulatorScale or 1
    if MOAIInputMgr.device.pointer then

@@ -4,6 +4,13 @@ local TKResourceManager = require('terevaka/TKResourceManager')
 local TKScreen = require('terevaka/TKScreen')
 
 
+function scaleProp(prop, dpi)
+   fromDpi = dpi or TKScreen.DEFAULT_DPI
+   scale = TKScreen.SCREEN_DPI / fromDpi
+   prop:setScl( scale )
+end
+
+
 -- GameScene prototype
 TKScene = {}
 
@@ -148,7 +155,7 @@ function TKScene:addProp(params)
       end
    end
    prop:setLoc ( x, y )
-   TKScreen.scaleProp( prop, texturePack.dpi)
+   scaleProp( prop, texturePack.dpi)
    layer:insertProp ( prop )
    return prop
 end
