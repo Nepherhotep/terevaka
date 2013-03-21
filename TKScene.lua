@@ -111,7 +111,6 @@ function TKScene:addScalableProp(params)
       end
    end
    prop:setLoc ( x, y )
-   print('scale factor', scaleFactor, TKScreen.DEFAULT_DPI, resourceDpi, dpiMultiplier)
    prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / (resourceDpi * dpiMultiplier) )
    layer:insertProp( prop )
    self:cacheView( resourceName, propTable.uid, prop )
