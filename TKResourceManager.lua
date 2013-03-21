@@ -12,6 +12,21 @@ function loadTexturePack(packName)
    local resourceDir = 'res/drawable-'..modifier..'/'
    local png = resourceDir..packName..'.png'
    local spec = resourceDir..packName..'.lua'
+   if MOAIFileSystem.checkFileExists(spec) == false then
+      if modifier == 'mdpi' then
+	 modifier, modifierDpi = 'xhdpi', 320
+      else
+	 modifier, modifierDpi = 'mdpi', 160
+      end
+      resourceDir = 'res/drawable-'..modifier..'/'
+      png = resourceDir..packName..'.png'
+      spec = resourceDir..packName..'.lua'
+      if MOAIFileSystem.checkFileExists(spec) == false then
+	 print(packName..' resource not found')
+	 -- quit function
+	 return nil
+      end
+   end
    local pack = {}
    pack.quads, pack.spriteNames = TKTexturePackerUtil.load(spec, png)
    pack.dpi = modifierDpi
