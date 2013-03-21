@@ -25,23 +25,26 @@ end
 
 function TKScene:fillLayer(params)
    -- Unpack options
-   texturePack = params['texturePack']
-   resourceName = params['resourceName']
-   layer = params['layer']
+   texturePack = params.texturePack
+   resourceName = params.resourceName
+   layer = params.layer
+   dpiMultiplier = params.dpiMultiplier
+
    self:updateViewCacheTable(resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(resourceName)
    local resource = dofile ( resourceFile )
    if resource.layout_type == 'elastic' then
-      self:fillElasticLayout(resourceName, resource, layer, texturePack)
+      self:fillElasticLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
    else
-      self:fillScalableLayout(resourceName, resource, layer, texturePack)
+      self:fillScalableLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
    end
 end
 
-function TKScene:fillScalableLayout(resourceName, resource, layer, texturePack)
+function TKScene:fillScalableLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
    params = {}
    params.layout_h_align = resource.layout_h_align
    params.resourceDpi = texturePack.dpi
+   params.dpiMultiplier = dpiMultiplier
    params.deck = texturePack.quads
    local scaleFactor = TKScreen.SCREEN_HEIGHT / resource.layout_height
 
@@ -70,6 +73,7 @@ function TKScene:addScalableProp(params)
    local propTable = params.propTable
    local layout_height = params.layout_height
    local layout_width = params.layout_width
+   local dpiMultiplier = params.dpiMultiplier or 1
    local resourceDpi = params.resourceDpi
    local horizontalOffset = params.horizontalOffset
    local deck = params.deck
@@ -107,14 +111,16 @@ function TKScene:addScalableProp(params)
       end
    end
    prop:setLoc ( x, y )
-   prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / resourceDpi)
+   print('scale factor', scaleFactor, TKScreen.DEFAULT_DPI, resourceDpi, dpiMultiplier)
+   prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / (resourceDpi * dpiMultiplier) )
    layer:insertProp( prop )
    self:cacheView( resourceName, propTable.uid, prop )
 end
 
-function TKScene:fillElasticLayout(resourceName, resource, layer, texturePack)
+function TKScene:fillElasticLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
+   print('dpi multiplier', dpiMultiplier)
    for i, propTable in ipairs(resource.props) do
-      local prop = self:addProp({layer = layer, propTable = propTable, texturePack = texturePack})
+      local prop = self:addProp({layer = layer, propTable = propTable, texturePack = texturePack, dpiMultiplier = dpiMultiplier})
       self:cacheView(resourceName, propTable.uid, prop)
    end
 end
@@ -158,17 +164,18 @@ function TKScene:addProp(params)
    local layer = params['layer']
    local propTable = params['propTable']
    local texturePack = params['texturePack']
+   local dpiMultiplier = params['dpiMultiplier'] or 1
    local deck, dpi, index
 
    -- extract deck, index, dpi depending on resource type - texturePack or single resource
    if texturePack then
       deck = texturePack.quads
       index = texturePack.spriteNames[propTable.name]
-      dpi = texturePack.dpi
+      dpi = texturePack.dpi * dpiMultiplier
    else
       deck = params.deck
       index = params.index
-      dpi = params.resourceDpi
+      dpi = params.resourceDpi * dpiMultiplier
    end
    local prop = MOAIProp2D.new ()
    prop:setDeck ( deck )
