@@ -27,8 +27,8 @@ function loadTexturePack(packName)
 	 return nil
       end
    end
-   local pack = {}
-   pack.quads, pack.spriteNames = TKTexturePackerUtil.load(spec, png)
+
+   local pack = TKTexturePackerUtil.load(spec, png)
    pack.dpi = modifierDpi
    return pack
 end
