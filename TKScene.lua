@@ -11,10 +11,8 @@ function scaleProp(prop, dpi)
 end
 
 
--- GameScene prototype
 TKScene = {}
 
--- GameScene constructor
 function TKScene:new (o)
    o = o or {}
    setmetatable(o, self)
