@@ -117,7 +117,6 @@ function TKScene:addScalableProp(params)
 end
 
 function TKScene:fillElasticLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
-   print('dpi multiplier', dpiMultiplier)
    for i, propTable in ipairs(resource.props) do
       local prop = self:addProp({layer = layer, propTable = propTable, texturePack = texturePack, dpiMultiplier = dpiMultiplier})
       self:cacheView(resourceName, propTable.uid, prop)

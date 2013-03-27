@@ -11,4 +11,10 @@ function TKTexturePack:new (o)
    return o
 end
 
+function TKTexturePack:release()
+   self.texture:release()
+   self.quads = nil
+   self.names = nil
+end
+
 return TKTexturePack
