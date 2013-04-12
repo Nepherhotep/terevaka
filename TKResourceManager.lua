@@ -8,29 +8,33 @@ local layoutFileNameCache = {}
 
 
 function loadTexturePack(packName)
+   local drawable = findDrawable(packName, '.png')
+   local spec = drawable.resourceDir..packName..'.lua'
+   local pack = TKTexturePackerUtil.load(spec, drawable.path)
+   pack.dpi = drawable.dpi
+   return pack
+end
+
+function findDrawable(name, ext)
+   local ext = ext or '.png'
    local modifier, modifierDpi = getModifier(TKScreen.SCREEN_DPI)
    local resourceDir = 'res/drawable-'..modifier..'/'
-   local png = resourceDir..packName..'.png'
-   local spec = resourceDir..packName..'.lua'
-   if MOAIFileSystem.checkFileExists(spec) == false then
+   local drawable = resourceDir..name..ext
+   if MOAIFileSystem.checkFileExists(drawable) == false then
       if modifier == 'mdpi' then
 	 modifier, modifierDpi = 'xhdpi', 320
       else
 	 modifier, modifierDpi = 'mdpi', 160
       end
       resourceDir = 'res/drawable-'..modifier..'/'
-      png = resourceDir..packName..'.png'
-      spec = resourceDir..packName..'.lua'
-      if MOAIFileSystem.checkFileExists(spec) == false then
-	 print(packName..' resource not found')
+      drawable = resourceDir..name..ext
+      if MOAIFileSystem.checkFileExists(drawable) == false then
+	 print(drawable..' resource not found')
 	 -- quit function
 	 return nil
       end
    end
-
-   local pack = TKTexturePackerUtil.load(spec, png)
-   pack.dpi = modifierDpi
-   return pack
+   return {path = drawable, dpi = modifierDpi, resourceDir = resourceDir}
 end
 
 function findLayoutFile(layoutName)
