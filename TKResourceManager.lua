@@ -15,6 +15,14 @@ function loadTexturePack(packName)
    return pack
 end
 
+function loadTexture(name, ext)
+   local drawable = findDrawable(name, ext)
+   texture = MOAIImage.new()
+   texture:load(drawable.path, MOAIImage.PREMULTIPLY_ALPHA)
+   texture.dpi = drawable.dpi
+   return texture
+end
+
 function findDrawable(name, ext)
    local ext = ext or '.png'
    local modifier, modifierDpi = getModifier(TKScreen.SCREEN_DPI)

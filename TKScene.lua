@@ -75,6 +75,7 @@ function TKScene:addScalableProp(params)
    -- do method
    local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
    local prop = MOAIProp2D.new ()
+
    prop:setDeck(deck)
    prop:setIndex(index)
    if propTable.x_unit == '%' then
