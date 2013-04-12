@@ -38,20 +38,20 @@ function TKScene:fillScalableLayout(params)
    local scaleFactor = TKScreen.SCREEN_HEIGHT / params.resource.layout_height
 
    if params.layout_h_align == 'center' then
-      deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * resource.layout_width)/2
+      deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * params.resource.layout_width)/2
    else
       if params.layout_h_align == 'left' then
 	 deltaX = 0
       else
-	 deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * resource.layout_width)
+	 deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * params.resource.layout_width)
       end
    end
 
    params.horizontalOffset = deltaX
-   params.layout_width = resource.layout_width
-   params.layout_height = resource.layout_height
-   for i, propTable in ipairs(resource.props) do
-      params.index = texturePack.spriteNames[propTable.name]
+   params.layout_width = params.resource.layout_width
+   params.layout_height = params.resource.layout_height
+   for i, propTable in ipairs(params.resource.props) do
+      params.index = params.texturePack.spriteNames[propTable.name]
       params.propTable = propTable
       self:addScalableProp(params)
    end
@@ -63,7 +63,7 @@ function TKScene:addScalableProp(params)
    local layout_height = params.layout_height
    local layout_width = params.layout_width
    local dpiMultiplier = params.dpiMultiplier or 1
-   local resourceDpi = params.resourceDpi
+   local resourceDpi = params.resourceDpi or TKScreen.DEFAULT_DPI
    local horizontalOffset = params.horizontalOffset
    local deck = params.deck
    local index = params.index
@@ -101,7 +101,7 @@ function TKScene:addScalableProp(params)
    end
    prop:setLoc ( x, y )
    prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / (resourceDpi * dpiMultiplier) )
-   layer:insertProp( prop )
+   params.layer:insertProp( prop )
    self:cacheView( resourceName, propTable.uid, prop )
 end
 
