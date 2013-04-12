@@ -37,7 +37,7 @@ function TKScene:fillScalableLayout(params)
    params.deck = params.texturePack.quads
    local scaleFactor = TKScreen.SCREEN_HEIGHT / params.resource.layout_height
 
-   if params.layout_h_align == 'center' then
+   if params.resource.layout_h_align == 'center' then
       deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * params.resource.layout_width)/2
    else
       if params.layout_h_align == 'left' then
