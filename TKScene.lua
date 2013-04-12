@@ -34,7 +34,9 @@ function TKScene:fillLayer(params)
 end
 
 function TKScene:fillScalableLayout(params)
-   params.deck = params.texturePack.quads
+   if params.texturePack then
+      params.deck = params.texturePack.quads
+   end
    local scaleFactor = TKScreen.SCREEN_HEIGHT / params.resource.layout_height
 
    if params.resource.layout_h_align == 'center' then
@@ -51,7 +53,9 @@ function TKScene:fillScalableLayout(params)
    params.layout_width = params.resource.layout_width
    params.layout_height = params.resource.layout_height
    for i, propTable in ipairs(params.resource.props) do
-      params.index = params.texturePack.spriteNames[propTable.name]
+      if params.texturePack then
+	 params.index = params.texturePack.spriteNames[propTable.name]
+      end
       params.propTable = propTable
       self:addScalableProp(params)
    end
