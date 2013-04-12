@@ -23,28 +23,19 @@ end
 
 function TKScene:fillLayer(params)
    -- Unpack options
-   texturePack = params.texturePack
-   resourceName = params.resourceName
-   layer = params.layer
-   dpiMultiplier = params.dpiMultiplier
-
-   self:updateViewCacheTable(resourceName)
-   local resourceFile = TKResourceManager.findLayoutFile(resourceName)
-   local resource = dofile ( resourceFile )
-   if resource.layout_type == 'elastic' then
-      self:fillElasticLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
+   self:updateViewCacheTable(params.resourceName)
+   local resourceFile = TKResourceManager.findLayoutFile(params.resourceName)
+   params.resource = dofile ( resourceFile )
+   if params.resource.layout_type == 'elastic' then
+      self:fillElasticLayout(params)
    else
-      self:fillScalableLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
+      self:fillScalableLayout(params)
    end
 end
 
-function TKScene:fillScalableLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
-   params = {}
-   params.layout_h_align = resource.layout_h_align
-   params.resourceDpi = texturePack.dpi
-   params.dpiMultiplier = dpiMultiplier
-   params.deck = texturePack.quads
-   local scaleFactor = TKScreen.SCREEN_HEIGHT / resource.layout_height
+function TKScene:fillScalableLayout(params)
+   params.deck = params.texturePack.quads
+   local scaleFactor = TKScreen.SCREEN_HEIGHT / params.resource.layout_height
 
    if params.layout_h_align == 'center' then
       deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * resource.layout_width)/2
@@ -114,10 +105,11 @@ function TKScene:addScalableProp(params)
    self:cacheView( resourceName, propTable.uid, prop )
 end
 
-function TKScene:fillElasticLayout(resourceName, resource, layer, texturePack, dpiMultiplier)
-   for i, propTable in ipairs(resource.props) do
-      local prop = self:addProp({layer = layer, propTable = propTable, texturePack = texturePack, dpiMultiplier = dpiMultiplier})
-      self:cacheView(resourceName, propTable.uid, prop)
+function TKScene:fillElasticLayout(params)
+   for i, propTable in ipairs(params.resource.props) do
+      params.propTable = propTable
+      local prop = self:addProp(params)
+      self:cacheView(params.resourceName, params.propTable.uid, prop)
    end
 end
 
