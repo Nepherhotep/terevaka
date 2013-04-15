@@ -158,6 +158,7 @@ function TKScene:addProp(params)
    local propTable = params['propTable']
    local texturePack = params['texturePack']
    local dpiMultiplier = params['dpiMultiplier'] or 1
+   local resourceDpi = params['resourceDpi'] or TKScreen.DEFAULT_DPI
    local deck, dpi, index
 
    -- extract deck, index, dpi depending on resource type - texturePack or single resource
@@ -168,7 +169,7 @@ function TKScene:addProp(params)
    else
       deck = params.deck
       index = params.index
-      dpi = params.resourceDpi * dpiMultiplier
+      dpi = resourceDpi * dpiMultiplier
    end
    local prop = MOAIProp2D.new ()
    prop:setDeck ( deck )
