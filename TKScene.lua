@@ -37,21 +37,10 @@ function TKScene:fillScalableLayout(params)
    if params.texturePack then
       params.deck = params.texturePack.quads
    end
-   local scaleFactor = TKScreen.SCREEN_HEIGHT / params.resource.layout_height
-
-   if params.resource.layout_h_align == 'center' then
-      deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * params.resource.layout_width)/2
-   else
-      if params.layout_h_align == 'left' then
-	 deltaX = 0
-      else
-	 deltaX = (TKScreen.SCREEN_WIDTH - scaleFactor * params.resource.layout_width)
-      end
-   end
-
    params.horizontalOffset = deltaX
    params.layout_width = params.resource.layout_width
    params.layout_height = params.resource.layout_height
+   params.layout_h_align = params.resource.layout_h_align
    for i, propTable in ipairs(params.resource.props) do
       if params.texturePack then
 	 params.index = params.texturePack.spriteNames[propTable.name]
@@ -68,12 +57,22 @@ function TKScene:addScalableProp(params)
    local layout_width = params.layout_width
    local dpiMultiplier = params.dpiMultiplier or 1
    local resourceDpi = params.resourceDpi or TKScreen.DEFAULT_DPI
-   local horizontalOffset = params.horizontalOffset
    local deck = params.deck
    local index = params.index
+   local horizontalOffset
 
    -- do method
    local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
+   if params.layout_h_align == 'center' then
+      horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)/2
+   else
+      if params.layout_h_align == 'left' then
+	 horizontalOffset = 0
+      else
+	 horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)
+      end
+   end
+
    local prop = MOAIProp2D.new ()
 
    prop:setDeck(deck)
