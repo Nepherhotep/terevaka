@@ -88,7 +88,6 @@ function subscribeTouches(handleClickOrTouch)
 	 function ( eventType, idx, x, y, tapCount )
             if eventType == MOAITouchSensor.TOUCH_DOWN then
 	       event = TKTapEvent:new()
-	       x, y = MOAIInputMgr.device.pointer:getLoc()
 	       event.wndX, event.wndY = x, y 
 	       event.dipX, event.dipY = pxToDip(x*scale, y*scale, false, true)
 	       handleClickOrTouch(event)
