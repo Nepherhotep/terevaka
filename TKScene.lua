@@ -46,7 +46,8 @@ function TKScene:fillScalableLayout(params)
 	 params.index = params.texturePack.spriteNames[propTable.name]
       end
       params.propTable = propTable
-      self:addScalableProp(params)
+      local prop = self:addScalableProp(params)
+      self:cacheView( params.resourceName, propTable.uid, prop )
    end
 end
 
@@ -106,7 +107,7 @@ function TKScene:addScalableProp(params)
    prop:setLoc ( x, y )
    prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / (resourceDpi * dpiMultiplier) )
    params.layer:insertProp( prop )
-   self:cacheView( resourceName, propTable.uid, prop )
+   return prop
 end
 
 function TKScene:fillElasticLayout(params)
