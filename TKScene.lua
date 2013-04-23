@@ -36,6 +36,7 @@ end
 function TKScene:fillScalableLayout(params)
    if params.texturePack then
       params.deck = params.texturePack.quads
+      params.resourceDpi = params.texturePack.dpi
    end
    params.horizontalOffset = deltaX
    params.layout_width = params.resource.layout_width
@@ -60,13 +61,12 @@ function TKScene:addScalableProp(params)
    local deck = params.deck
    local index = params.index
    local horizontalOffset
-
    -- do method
    local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
-   if params.h_align == 'center' then
+   if propTable.h_align == 'center' then
       horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)/2
    else
-      if params.h_align == 'left' then
+      if propTable.h_align == 'left' then
 	 horizontalOffset = 0
       else
 	 horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)
