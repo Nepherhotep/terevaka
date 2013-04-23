@@ -36,7 +36,7 @@ function findDrawable(name, ext)
 	 keys[i] = sub
       end
    end
-   table.sort(keys)
+   table.sort(keys, function(a,b) return a>b end)
    local resourceDir = 'res/'..foundDirs[keys[1]]..'/'
    local path = resourceDir..name..ext
    local dpi = TKScreen.DEFAULT_DPI
