@@ -5,6 +5,7 @@ local TKScreen = require( 'terevaka/TKScreen')
 local TKTexturePackerUtil = require( 'terevaka/TKTexturePackerUtil' )
 
 local layoutFileNameCache = {}
+local drawableDirs = {}
 
 
 function loadTexturePack(packName)
@@ -25,24 +26,21 @@ end
 
 function findDrawable(name, ext)
    local ext = ext or '.png'
-   local modifier, modifierDpi = getModifier(TKScreen.SCREEN_DPI)
-   local resourceDir = 'res/drawable-'..modifier..'/'
-   local drawable = resourceDir..name..ext
-   if MOAIFileSystem.checkFileExists(drawable) == false then
-      if modifier == 'mdpi' then
-	 modifier, modifierDpi = 'xhdpi', 320
-      else
-	 modifier, modifierDpi = 'mdpi', 160
-      end
-      resourceDir = 'res/drawable-'..modifier..'/'
-      drawable = resourceDir..name..ext
-      if MOAIFileSystem.checkFileExists(drawable) == false then
-	 print(drawable..' resource not found')
-	 -- quit function
-	 return nil
+   local dirs = MOAIFileSystem.listDirectories('res')
+   local foundDirs = {}
+   local keys = {}
+   for i, dir in pairs(MOAIFileSystem.listDirectories('res')) do
+      fist, last, sub = string.find(dir, 'drawable[-]h(%d+)px')
+      if sub then
+	 foundDirs[sub] = dir
+	 keys[i] = sub
       end
    end
-   return {path = drawable, dpi = modifierDpi, resourceDir = resourceDir}
+   table.sort(keys)
+   local resourceDir = 'res/'..foundDirs[keys[1]]..'/'
+   local path = resourceDir..name..ext
+   local dpi = TKScreen.DEFAULT_DPI
+   return {path = path, dpi = modifierDpi, resourceDir = resourceDir}
 end
 
 function findLayoutFile(layoutName)
