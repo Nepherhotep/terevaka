@@ -40,7 +40,6 @@ function TKScene:fillScalableLayout(params)
    params.horizontalOffset = deltaX
    params.layout_width = params.resource.layout_width
    params.layout_height = params.resource.layout_height
-   params.layout_h_align = params.resource.layout_h_align
    for i, propTable in ipairs(params.resource.props) do
       if params.texturePack then
 	 params.index = params.texturePack.spriteNames[propTable.name]
@@ -64,10 +63,10 @@ function TKScene:addScalableProp(params)
 
    -- do method
    local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
-   if params.layout_h_align == 'center' then
+   if params.h_align == 'center' then
       horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)/2
    else
-      if params.layout_h_align == 'left' then
+      if params.h_align == 'left' then
 	 horizontalOffset = 0
       else
 	 horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)
