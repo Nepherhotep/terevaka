@@ -28,17 +28,31 @@ function findDrawable(name, ext)
    local ext = ext or '.png'
    local dirs = MOAIFileSystem.listDirectories('res')
    local foundDirs = {}
-   local keys = {}
+   local lesserKeys = {}
+   local largerKeys = {}
    for i, dir in pairs(MOAIFileSystem.listDirectories('res')) do
       fist, last, sub = string.find(dir, 'drawable[-]h(%d+)px')
       if sub then
+	 local height = tonumber(sub)
 	 foundDirs[sub] = dir
-	 keys[i] = sub
+	 if height < TKScreen.SCREEN_HEIGHT then
+	    table.insert(lesserKeys, height)
+	 else
+	    table.insert(largerKeys, height)
+	 end
       end
    end
-   table.sort(keys)
-   local resourceHeight = keys[1]
-   local resourceDir = 'res/'..foundDirs[resourceHeight]..'/'
+   table.sort(largerKeys) -- sort in incrementing order
+   table.sort(lesserKeys, function (a, b) return a < b end) -- sort in decrementing order
+   
+   local resourceHeight
+   if #largerKeys > 0 then
+      resourceHeight = largerKeys[1]
+   else
+      resourceHeight = lesserKeys[1]
+   end
+      
+   local resourceDir = 'res/'..foundDirs[tostring(resourceHeight)]..'/'
    local resourceScaleFactor = TKScreen.SCREEN_HEIGHT / resourceHeight
    local path = resourceDir..name..ext
    return {path = path, resourceDir = resourceDir, resourceScaleFactor = resourceScaleFactor}
