@@ -69,7 +69,7 @@ function TKScene:addScalableProp(params)
    y = scaleFactor * propTable.y
    prop:setLoc ( x, y )
    prop:setScl( resourceScaleFactor )
-   if params.z_index then 
+   if propTable.z_index then
       prop:setPriority( propTable.z_index )
    end
    params.layer:insertProp( prop )
