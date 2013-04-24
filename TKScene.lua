@@ -105,7 +105,7 @@ function TKScene:handleTouch(layer, event)
    local prop = layer:getPartition():propForPoint(layer:wndToWorld(event.wndX, event.wndY))
    if prop then
       if prop.onTouch then
-	 prop:onTouch(event)
+	 return prop:onTouch(event)
       end
    end
 end
