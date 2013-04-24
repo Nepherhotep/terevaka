@@ -65,34 +65,13 @@ function TKScene:addScalableProp(params)
 
    prop:setDeck(deck)
    prop:setIndex(index)
-   if propTable.x_unit == '%' then
-      if propTable.align_left then
-	 x = horizontalOffset + scaleFactor * layout_width * propTable.x / 100
-      else
-	 x = horizontalOffset + scaleFactor * layout_width * (100 - propTable.x) / 100
-      end
-   else
-      if propTable.align_left then
-	 x = horizontalOffset + scaleFactor * propTable.x
-      else
-	 x = horizontalOffset + scaleFactor * ( layout_width - propTable.x)
-      end
-   end
-   if propTable.y_unit == '%' then
-      if propTable.align_bottom then
-	 y = TKScreen.SCREEN_HEIGHT * propTable.y / 100
-      else
-	 y = TKScreen.SCREEN_HEIGHT * (100 - propTable.y) / 100
-      end
-   else
-      if propTable.align_bottom then
-	 y = scaleFactor * propTable.y
-      else
-	 y = TKScreen.SCREEN_HEIGHT - scaleFactor * propTable.y
-      end
-   end
+   x = horizontalOffset + scaleFactor * propTable.x
+   y = scaleFactor * propTable.y
    prop:setLoc ( x, y )
    prop:setScl( resourceScaleFactor )
+   if params.z_index then 
+      prop:setPriority( propTable.z_index )
+   end
    params.layer:insertProp( prop )
    return prop
 end
