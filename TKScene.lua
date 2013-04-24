@@ -4,13 +4,6 @@ local TKResourceManager = require('terevaka/TKResourceManager')
 local TKScreen = require('terevaka/TKScreen')
 
 
-function scaleProp(prop, dpi)
-   fromDpi = dpi or TKScreen.DEFAULT_DPI
-   scale = TKScreen.SCREEN_DPI / fromDpi
-   prop:setScl( scale )
-end
-
-
 TKScene = {}
 
 function TKScene:new (o)
@@ -26,17 +19,13 @@ function TKScene:fillLayer(params)
    self:updateViewCacheTable(params.resourceName)
    local resourceFile = TKResourceManager.findLayoutFile(params.resourceName)
    params.resource = dofile ( resourceFile )
-   if params.resource.layout_type == 'elastic' then
-      self:fillElasticLayout(params)
-   else
-      self:fillScalableLayout(params)
-   end
+   self:fillScalableLayout(params)
 end
 
 function TKScene:fillScalableLayout(params)
    if params.texturePack then
       params.deck = params.texturePack.quads
-      params.resourceDpi = params.texturePack.dpi
+      params.resourceScaleFactor = params.texturePack.resourceScaleFactor
    end
    params.horizontalOffset = deltaX
    params.layout_width = params.resource.layout_width
@@ -56,8 +45,7 @@ function TKScene:addScalableProp(params)
    local propTable = params.propTable
    local layout_height = params.layout_height
    local layout_width = params.layout_width
-   local dpiMultiplier = params.dpiMultiplier or 1
-   local resourceDpi = params.resourceDpi or TKScreen.DEFAULT_DPI
+   local resourceScaleFactor = params.resourceScaleFactor
    local deck = params.deck
    local index = params.index
    local horizontalOffset
@@ -104,17 +92,9 @@ function TKScene:addScalableProp(params)
       end
    end
    prop:setLoc ( x, y )
-   prop:setScl( scaleFactor * TKScreen.DEFAULT_DPI / (resourceDpi * dpiMultiplier) )
+   prop:setScl( resourceScaleFactor )
    params.layer:insertProp( prop )
    return prop
-end
-
-function TKScene:fillElasticLayout(params)
-   for i, propTable in ipairs(params.resource.props) do
-      params.propTable = propTable
-      local prop = self:addProp(params)
-      self:cacheView(params.resourceName, params.propTable.uid, prop)
-   end
 end
 
 function TKScene:updateViewCacheTable(resourceName)
@@ -149,49 +129,6 @@ function TKScene:handleTouch(layer, event)
 	 prop:onTouch(event)
       end
    end
-end
-
-function TKScene:addProp(params)
-   -- extract params
-   local layer = params['layer']
-   local propTable = params['propTable']
-   local texturePack = params['texturePack']
-   local dpiMultiplier = params['dpiMultiplier'] or 1
-   local resourceDpi = params['resourceDpi'] or TKScreen.DEFAULT_DPI
-   local deck, dpi, index
-
-   -- extract deck, index, dpi depending on resource type - texturePack or single resource
-   if texturePack then
-      deck = texturePack.quads
-      index = texturePack.spriteNames[propTable.name]
-      dpi = texturePack.dpi * dpiMultiplier
-   else
-      deck = params.deck
-      index = params.index
-      dpi = resourceDpi * dpiMultiplier
-   end
-   local prop = MOAIProp2D.new ()
-   prop:setDeck ( deck )
-   prop:setIndex ( index )
-   local x, y = TKScreen.dipToPx(propTable.x, propTable.y, not propTable.align_left, not propTable.align_bottom )
-   if propTable.x_unit == '%' then
-      if propTable.align_left then
-	 x = TKScreen.SCREEN_WIDTH * propTable.x / 100
-      else
-	 x = TKScreen.SCREEN_WIDTH * (100 - propTable.x) / 100
-      end
-   end
-   if propTable.y_unit == '%' then
-      if propTable.align_bottom then
-	 y = TKScreen.SCREEN_HEIGHT * propTable.y / 100
-      else
-	 y = TKScreen.SCREEN_HEIGHT * (100 - propTable.y) / 100
-      end
-   end
-   prop:setLoc ( x, y )
-   scaleProp( prop, dpi)
-   layer:insertProp ( prop )
-   return prop
 end
 
 function TKScene:clear()

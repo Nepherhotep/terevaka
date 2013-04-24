@@ -12,7 +12,7 @@ function loadTexturePack(packName)
    local drawable = findDrawable(packName, '.png')
    local spec = drawable.resourceDir..packName..'.lua'
    local pack = TKTexturePackerUtil.load(spec, drawable.path)
-   pack.dpi = drawable.dpi
+   pack.resourceScaleFactor = drawable.resourceScaleFactor
    return pack
 end
 
@@ -20,7 +20,7 @@ function loadTexture(name, ext)
    local drawable = findDrawable(name, ext)
    texture = MOAITexture.new()
    texture:load(drawable.path, MOAIImage.PREMULTIPLY_ALPHA)
-   texture.dpi = drawable.dpi
+   texture.resourceScaleFactor = drawable.resourceScaleFactor
    return texture
 end
 
@@ -36,11 +36,12 @@ function findDrawable(name, ext)
 	 keys[i] = sub
       end
    end
-   table.sort(keys, function(a,b) return a>b end)
-   local resourceDir = 'res/'..foundDirs[keys[1]]..'/'
+   table.sort(keys)
+   local resourceHeight = keys[1]
+   local resourceDir = 'res/'..foundDirs[resourceHeight]..'/'
+   local resourceScaleFactor = TKScreen.SCREEN_HEIGHT / resourceHeight
    local path = resourceDir..name..ext
-   local dpi = TKScreen.DEFAULT_DPI
-   return {path = path, dpi = modifierDpi, resourceDir = resourceDir}
+   return {path = path, resourceDir = resourceDir, resourceScaleFactor = resourceScaleFactor}
 end
 
 function findLayoutFile(layoutName)
