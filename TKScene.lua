@@ -27,7 +27,6 @@ function TKScene:fillScalableLayout(params)
       params.deck = params.texturePack.quads
       params.resourceScaleFactor = params.texturePack.resourceScaleFactor
    end
-   params.horizontalOffset = deltaX
    params.layout_width = params.resource.layout_width
    params.layout_height = params.resource.layout_height
    for i, propTable in ipairs(params.resource.props) do
