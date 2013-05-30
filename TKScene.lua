@@ -57,7 +57,11 @@ function TKScene:addScalableProp(params)
       if propTable.h_align == 'left' then
 	 horizontalOffset = 0
       else
-	 horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)
+	 if propTable.h_align == 'right' then
+	    horizontalOffset = (TKScreen.SCREEN_WIDTH - scaleFactor * layout_width)
+	 else
+	    horizontalOffset = propTable.x * (TKScreen.SCREEN_WIDTH / layout_width - scaleFactor)
+	 end
       end
    end
 
