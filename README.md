@@ -26,27 +26,20 @@ Applicaction directory structure
 ---------
 
  * res/layout -> for layouts built using terevaka-ui-builder
- * res/drawable-mdpi -> for texture packs
- * res/drawable-xhdpi -> for HD texture packs
+ * res/drawable-h<height>px -> for texture packs with lanscape height <height>, example:
+ * res/drawable-h768px -> lanscape height is 768 px
 
 
 terevaka.TKResourceManager
 ---------
 
-terevaka.TKResourceManager.loadTexturePack('main') will try to load texture pack 'main.lua' which is in res/drawable-mdpi or xhdpi depending on current screenDpi.
-Attention! Both of mdpi and xhdpi texture packs required.
-
-
-terevaka.TKScreen
----------
-
-Two the most important functions of the framework are dipToPix and pixToDip. They convert coordinates from dips to scene and vice versa.
+terevaka.TKResourceManager.loadTexturePack('main') will try to load texture pack 'main.lua' according to best match with res/drawable-h<height>px
 
 
 terevaka.TKScene
 ---------
 
-Transitions between scenes are not implemented yet, but TKScene is still useful. Call self:fillLayer(self.layer, self.texturePack, 'main-layout') method to populate self.layer
+Call self:fillLayer(self.layer, self.texturePack, 'main-layout') method to populate self.layer
 with sprites from self.texturePack using "res/layout/main-layout.lua" file (file built using terevaka-ui-builder).
 
 Testing multiple devices
