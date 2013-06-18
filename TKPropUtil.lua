@@ -27,3 +27,8 @@ function flipProp(prop, flopped)
    end
    prop:setScl(x, y)
 end
+
+function scaleProp(prop, scaleFactor)
+   local x, y = prop:getScl()
+   prop:setScl(x*scaleFactor, y*scaleFactor)
+end
