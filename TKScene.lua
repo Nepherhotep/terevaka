@@ -34,8 +34,7 @@ function TKScene:fillScalableLayout(params)
 	 params.index = params.texturePack.spriteNames[propTable.name]
       end
       params.propTable = propTable
-      local prop = self:addScalableProp(params)
-      self:cacheView( params.resourceName, propTable.uid, prop )
+      self:addScalableProp(params)
    end
 end
 
@@ -76,6 +75,7 @@ function TKScene:addScalableProp(params)
       prop:setPriority( propTable.z_index )
    end
    params.layer:insertProp( prop )
+   self:cacheView( params.resourceName, propTable.uid, prop )
    return prop
 end
 
