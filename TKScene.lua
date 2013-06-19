@@ -10,7 +10,7 @@ function TKScene:new (o)
    o = o or {}
    setmetatable(o, self)
    self.__index = self
-   self.viewCache = nil
+   o.viewCache = nil
    return o
 end
 
