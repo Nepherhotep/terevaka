@@ -48,27 +48,13 @@ function TKScene:addScalableProp ( params )
    local index = params.index
    local horizontalOffset
    -- do method
-   local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
-   if propTable.h_align == 'center' then
-      horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * layout_width ) / 2
-   else
-      if propTable.h_align == 'left' then
-	 horizontalOffset = 0
-      else
-	 if propTable.h_align == 'right' then
-	    horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * layout_width )
-	 else
-	    horizontalOffset = propTable.x * ( TKScreen.SCREEN_WIDTH / layout_width - scaleFactor )
-	 end
-      end
-   end
 
    local prop = MOAIProp2D.new ()
-
    prop:setDeck ( deck )
    prop:setIndex ( index )
-   x = horizontalOffset + scaleFactor * propTable.x
-   y = scaleFactor * propTable.y
+
+   local x, y = self:scaledToAbsolute ( propTable.x, propTable.y, layout_width, layout_height, propTable.h_align )
+
    prop:setLoc ( x, y )
    prop:setScl ( resourceScaleFactor )
    if propTable.z_index then
@@ -77,6 +63,26 @@ function TKScene:addScalableProp ( params )
    params.layer:insertProp ( prop )
    self:cacheView ( params.resourceName, propTable.uid, prop )
    return prop
+end
+
+function TKScene:scaledToAbsolute ( x, y, layout_width, layout_height, h_align )
+   local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
+   if h_align == 'center' then
+      horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * layout_width ) / 2
+   else
+      if h_align == 'left' then
+	 horizontalOffset = 0
+      else
+	 if h_align == 'right' then
+	    horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * layout_width )
+	 else
+	    horizontalOffset = x * ( TKScreen.SCREEN_WIDTH / layout_width - scaleFactor )
+	 end
+      end
+   end
+   x = horizontalOffset + scaleFactor * x
+   y = scaleFactor * y
+   return x, y
 end
 
 function TKScene:updateViewCacheTable ( resourceName )
