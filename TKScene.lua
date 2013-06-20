@@ -31,7 +31,7 @@ function TKScene:fillScalableLayout ( params )
    params.layout_height = params.resource.layout_height
    for i, propTable in ipairs ( params.resource.props ) do
       if params.texturePack then
-	 params.index = params.texturePack.spriteNames[propTable.name]
+	 params.index = params.texturePack.spriteNames [ propTable.name ]
       end
       params.propTable = propTable
       self:addScalableProp ( params )
@@ -84,21 +84,21 @@ function TKScene:updateViewCacheTable ( resourceName )
    if self.viewCache == nil then
       self.viewCache = {}
    end
-   if self.viewCache[resourceName] == nil then
-      self.viewCache[resourceName] = {}
+   if self.viewCache [ resourceName ] == nil then
+      self.viewCache [ resourceName ] = {}
    end
 end
 
 function TKScene:cacheView ( resourceName, viewId, view )
    if viewId ~= "" and viewId ~= nil then
-      self.viewCache[resourceName][viewId] = view
+      self.viewCache [ resourceName ][ viewId ] = view
    end
 end
 
 function TKScene:findPropById ( layerResourceName, viewId )
    if self.viewCache ~= nil then
-      if self.viewCache[layerResourceName] ~= nil then
-	 return self.viewCache[layerResourceName][viewId]
+      if self.viewCache [ layerResourceName ] ~= nil then
+	 return self.viewCache [ layerResourceName ][ viewId ]
       end
    end
    return nil
