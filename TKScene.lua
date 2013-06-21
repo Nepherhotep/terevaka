@@ -53,7 +53,7 @@ function TKScene:addScalableProp ( params )
    prop:setDeck ( deck )
    prop:setIndex ( index )
 
-   local x, y = self:scaledToAbsolute ( propTable.x, propTable.y, layout_width, layout_height, propTable.h_align )
+   local x, y = self.scaledToAbsolute ( propTable.x, propTable.y, layout_width, layout_height, propTable.h_align )
 
    prop:setLoc ( x, y )
    prop:setScl ( resourceScaleFactor )
@@ -65,7 +65,7 @@ function TKScene:addScalableProp ( params )
    return prop
 end
 
-function TKScene:scaledToAbsolute ( x, y, layout_width, layout_height, h_align )
+function TKScene.scaledToAbsolute ( x, y, layout_width, layout_height, h_align )
    local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
    if h_align == 'center' then
       horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * layout_width ) / 2
