@@ -9,7 +9,7 @@ TKApplication = {}
 -- TKApplication constructor
 function TKApplication:new ( o )
    o = o or {}
-   setmetatable(o, self)
+   setmetatable ( o, self )
    self.__index = self
    return o
 end
