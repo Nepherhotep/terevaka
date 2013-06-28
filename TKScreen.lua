@@ -74,7 +74,7 @@ function subscribeTouches ( handleClickOrTouch )
       MOAIInputMgr.device.mouseLeft:setCallback ( 
 	 function ( isMouseDown )
             if ( isMouseDown ) then
-	       event = TKTapEvent:new ()
+	       event = TKTapEvent:new () :init()
 	       x, y = MOAIInputMgr.device.pointer:getLoc ()
 	       event.wndX, event.wndY = x, y
 	       event.dipX, event.dipY = pxToDip ( x * scale, y * scale, false, true )
@@ -87,7 +87,7 @@ function subscribeTouches ( handleClickOrTouch )
       MOAIInputMgr.device.touch:setCallback (
 	 function ( eventType, idx, x, y, tapCount )
             if eventType == MOAITouchSensor.TOUCH_DOWN then
-	       event = TKTapEvent:new ()
+	       event = TKTapEvent:new () :init()
 	       event.wndX, event.wndY = x, y 
 	       event.dipX, event.dipY = pxToDip ( x * scale, y * scale, false, true )
 	       handleClickOrTouch ( event )
