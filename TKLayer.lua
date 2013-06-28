@@ -40,8 +40,8 @@ function TKLayer:fillScalableLayout ( params )
       params.deck = params.texturePack.quads
       params.resourceScaleFactor = params.texturePack.resourceScaleFactor
    end
-   self.layout_width = params.resource.layout_width
-   self.layout_height = params.resource.layout_height
+   self.layoutWidth = params.resource.layout_width
+   self.layoutHeight = params.resource.layout_height
    for i, propTable in ipairs ( params.resource.props ) do
       if params.texturePack then
 	 params.index = params.texturePack.spriteNames [ propTable.name ]
@@ -77,17 +77,17 @@ function TKLayer:addScalableProp ( params )
 end
 
 function TKLayer:scaledToAbsolute ( x, y, h_align )
-   local scaleFactor = TKScreen.SCREEN_HEIGHT / self.layout_height
+   local scaleFactor = TKScreen.SCREEN_HEIGHT / self.layoutHeight
    if h_align == 'center' then
-      horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * self.layout_width ) / 2
+      horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * self.layoutWidth ) / 2
    else
       if h_align == 'left' then
 	 horizontalOffset = 0
       else
 	 if h_align == 'right' then
-	    horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * self.layout_width )
+	    horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * self.layoutWidth )
 	 else
-	    horizontalOffset = x * ( TKScreen.SCREEN_WIDTH / self.layout_width - scaleFactor )
+	    horizontalOffset = x * ( TKScreen.SCREEN_WIDTH / self.layoutWidth - scaleFactor )
 	 end
       end
    end
