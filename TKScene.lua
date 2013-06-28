@@ -14,102 +14,6 @@ function TKScene:new ( o )
    return o
 end
 
-function TKScene:fillLayer ( params )
-   -- Unpack options
-   self:updateViewCacheTable ( params.resourceName )
-   local resourceFile = TKResourceManager.findLayoutFile ( params.resourceName )
-   params.resource = dofile ( resourceFile )
-   self:fillScalableLayout ( params )
-end
-
-function TKScene:fillScalableLayout ( params )
-   if params.texturePack then
-      params.deck = params.texturePack.quads
-      params.resourceScaleFactor = params.texturePack.resourceScaleFactor
-   end
-   params.layout_width = params.resource.layout_width
-   params.layout_height = params.resource.layout_height
-   for i, propTable in ipairs ( params.resource.props ) do
-      if params.texturePack then
-	 params.index = params.texturePack.spriteNames [ propTable.name ]
-      end
-      params.propTable = propTable
-      self:addScalableProp ( params )
-   end
-end
-
-function TKScene:addScalableProp ( params )
-   -- extract params
-   local propTable = params.propTable
-   local layout_height = params.layout_height
-   local layout_width = params.layout_width
-   local resourceScaleFactor = params.resourceScaleFactor
-   local deck = params.deck
-   local index = params.index
-   local horizontalOffset
-   -- do method
-
-   local prop = MOAIProp2D.new ()
-   prop:setDeck ( deck )
-   prop:setIndex ( index )
-
-   local x, y = self.scaledToAbsolute ( propTable.x, propTable.y, layout_width, layout_height, propTable.h_align )
-
-   prop:setLoc ( x, y )
-   prop:setScl ( resourceScaleFactor )
-   if propTable.z_index then
-      prop:setPriority ( propTable.z_index )
-   end
-   params.layer:insertProp ( prop )
-   self:cacheView ( params.resourceName, propTable.uid, prop )
-   return prop
-end
-
-function TKScene.scaledToAbsolute ( x, y, layout_width, layout_height, h_align )
-   local scaleFactor = TKScreen.SCREEN_HEIGHT / layout_height
-   if h_align == 'center' then
-      horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * layout_width ) / 2
-   else
-      if h_align == 'left' then
-	 horizontalOffset = 0
-      else
-	 if h_align == 'right' then
-	    horizontalOffset = ( TKScreen.SCREEN_WIDTH - scaleFactor * layout_width )
-	 else
-	    horizontalOffset = x * ( TKScreen.SCREEN_WIDTH / layout_width - scaleFactor )
-	 end
-      end
-   end
-   x = horizontalOffset + scaleFactor * x
-   y = scaleFactor * y
-   return x, y
-end
-
-function TKScene:updateViewCacheTable ( resourceName )
-   -- Create cache table if it doesn't exist
-   if self.viewCache == nil then
-      self.viewCache = {}
-   end
-   if self.viewCache [ resourceName ] == nil then
-      self.viewCache [ resourceName ] = {}
-   end
-end
-
-function TKScene:cacheView ( resourceName, viewId, view )
-   if viewId ~= "" and viewId ~= nil then
-      self.viewCache [ resourceName ][ viewId ] = view
-   end
-end
-
-function TKScene:findPropById ( layerResourceName, viewId )
-   if self.viewCache ~= nil then
-      if self.viewCache [ layerResourceName ] ~= nil then
-	 return self.viewCache [ layerResourceName ][ viewId ]
-      end
-   end
-   return nil
-end
-
 function TKScene:handleTouch ( layer, event )
    local prop = layer:getPartition () :propForPoint ( layer:wndToWorld ( event.wndX, event.wndY ))
    if prop then
@@ -119,15 +23,9 @@ function TKScene:handleTouch ( layer, event )
    end
 end
 
-function TKScene:clear ()
-   for i, layer in ipairs ( self:getLayers ()) do
-      layer:clear ()
-   end
-end
-
 -- protocol for Terevaka.TKApplication
 function TKScene:getRenderTable ()
-   print ( 'Override TKScene:getLayers ()' )
+   print ( 'Override TKScene:getRenderTable ()' )
    return {}
 end
 
