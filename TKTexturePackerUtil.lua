@@ -1,9 +1,9 @@
 module(..., package.seeall)
 
-local TKTexturePack = require('terevaka/TKTexturePack')
+local TKTexturePack = require ( 'terevaka/TKTexturePack' )
 
-function load(lua, png)
-   local texturePack = TKTexturePack:new()
+function load( lua, png )
+   local texturePack = TKTexturePack:new () :init ()
    local frames = dofile ( lua ).frames
    
    texturePack.texture = MOAITexture.new ()

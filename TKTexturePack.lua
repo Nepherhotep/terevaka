@@ -4,15 +4,19 @@ module(..., package.seeall)
 TKTexturePack = {}
 
 -- GameScene constructor
-function TKTexturePack:new (o)
+function TKTexturePack:new ( o )
    o = o or {}
-   setmetatable(o, self)
+   setmetatable ( o, self )
    self.__index = self
    return o
 end
 
-function TKTexturePack:release()
-   self.texture:release()
+function TKTexturePack:init ()
+   return self
+end
+
+function TKTexturePack:release ()
+   self.texture:release ()
    self.quads = nil
    self.names = nil
 end
