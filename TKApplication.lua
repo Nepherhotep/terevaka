@@ -39,6 +39,7 @@ function TKApplication:initWithScene( scene )
    self:onCreate ()
    self:loadScene ( scene )
    self:onResume()
+   return self
 end
 
 function TKApplication:loadScene ( scene )
