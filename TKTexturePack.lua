@@ -10,32 +10,32 @@ function TKTextureMultiPack:new ( o )
 end
 
 function TKTextureMultiPack:init ()
-   self.texturePacks = {}
+   self.textureTables = {}
    return self
 end
 
-function TKTextureMultiPack:addTexturePack ( pack )
-   table.insert ( self.texturePacks, pack )
+function TKTextureMultiPack:addTextureTable ( pack )
+   table.insert ( self.textureTables, pack )
 end
 
 function TKTextureMultiPack:getFrameInfo ( frameName )
-   for i, pack in ipairs ( self.texturePacks ) do
-      if pack.spriteNames [ frameName ] then
+   for i, tbl in ipairs ( self.textureTables ) do
+      if tbl.spriteNames [ frameName ] then
 	 local frameInfo = {}
 	 frameInfo.frameName = frameName
-	 frameInfo.quads = pack.quads
-	 frameInfo.resourceScaleFactor = pack.resourceScaleFactor
-	 frameInfo.index = pack.spriteNames [ frameName ]
+	 frameInfo.quads = tbl.quads
+	 frameInfo.resourceScaleFactor = tbl.resourceScaleFactor
+	 frameInfo.index = tbl.spriteNames [ frameName ]
 	 return frameInfo
       end
    end
 end
 
 function TKTextureMultiPack:release ()
-   for i, pack in ipairs ( self.texturePacks ) do
-      pack.texture:release ()
+   for i, tbl in ipairs ( self.textureTables ) do
+      tbl.texture:release ()
    end
-   self.texturePacks = {}
+   self.textureTables = {}
 end
 
 return TKTextureMultiPack
