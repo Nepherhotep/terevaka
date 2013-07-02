@@ -14,6 +14,10 @@ function TKScene:new ( o )
    return o
 end
 
+function TKScene:init ()
+   return self
+end
+
 function TKScene:handleTouch ( layer, event )
    local prop = layer:getPartition () :propForPoint ( layer:wndToWorld ( event.wndX, event.wndY ))
    if prop then

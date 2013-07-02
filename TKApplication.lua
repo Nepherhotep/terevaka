@@ -14,10 +14,6 @@ function TKApplication:new ( o )
    return o
 end
 
-function TKApplication:init ()
-   return self
-end
-
 function TKApplication:setupSim ()
    -- Setup sim
    local scale = MOAIEnvironment.simulatorScale or 1
