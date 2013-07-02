@@ -1,14 +1,13 @@
 module(..., package.seeall)
 
-local TKTexturePack = require ( 'terevaka/TKTexturePack' )
 
 function load( lua, png )
-   local texturePack = TKTexturePack:new () :init ()
+   local textureTable = {}
    local frames = dofile ( lua ).frames
    
-   texturePack.texture = MOAITexture.new ()
-   texturePack.texture:load ( png )
-   local xtex, ytex = texturePack.texture:getSize ()
+   textureTable.texture = MOAITexture.new ()
+   textureTable.texture:load ( png )
+   local xtex, ytex = textureTable.texture:getSize ()
    
    -- Annotate the frame array with uv quads and geometry rects
    for i, frame in ipairs ( frames ) do
@@ -43,18 +42,18 @@ function load( lua, png )
    end
    
    -- Construct the deck
-   texturePack.quads = MOAIGfxQuadDeck2D.new ()
-   texturePack.quads:setTexture ( texturePack.texture )
-   texturePack.quads:reserve ( #frames )
+   textureTable.quads = MOAIGfxQuadDeck2D.new ()
+   textureTable.quads:setTexture ( textureTable.texture )
+   textureTable.quads:reserve ( #frames )
    local names = {}
    for i, frame in ipairs ( frames ) do
       local q = frame.uvQuad
       local r = frame.geomRect
       names[frame.name] = i
-      texturePack.quads:setUVQuad ( i, q.x0,q.y0, q.x1,q.y1, q.x2,q.y2, q.x3,q.y3 )
-      texturePack.quads:setRect ( i, r.x0,r.y0, r.x1,r.y1 )
+      textureTable.quads:setUVQuad ( i, q.x0,q.y0, q.x1,q.y1, q.x2,q.y2, q.x3,q.y3 )
+      textureTable.quads:setRect ( i, r.x0,r.y0, r.x1,r.y1 )
    end
    
-   texturePack.spriteNames = names
-   return texturePack
+   textureTable.spriteNames = names
+   return textureTable
 end

@@ -36,15 +36,14 @@ function TKLayer:fill ( params )
 end
 
 function TKLayer:fillScalableLayout ( params )
-   if params.texturePack then
-      params.deck = params.texturePack.quads
-      params.resourceScaleFactor = params.texturePack.resourceScaleFactor
-   end
    self.layoutWidth = params.resource.layout_width
    self.layoutHeight = params.resource.layout_height
    for i, propTable in ipairs ( params.resource.props ) do
       if params.texturePack then
-	 params.index = params.texturePack.spriteNames [ propTable.name ]
+	 local frameInfo = params.texturePack:getFrameInfo ( propTable.name )
+	 params.index = frameInfo.index
+	 params.deck = frameInfo.quads
+	 params.resourceScaleFactor = frameInfo.resourceScaleFactor
       end
       params.propTable = propTable
       self:addScalableProp ( params )

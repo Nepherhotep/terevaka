@@ -3,6 +3,7 @@ module(..., package.seeall)
 
 local TKScreen = require ( 'terevaka/TKScreen' )
 local TKTexturePackerUtil = require ( 'terevaka/TKTexturePackerUtil' )
+local TKTextureMultiPack = require ( 'terevaka/TKTextureMultiPack' )
 
 local layoutFileNameCache = {}
 local drawableDirs = {}
@@ -13,7 +14,10 @@ function loadTexturePack ( packName )
    local spec = drawable.resourceDir..packName..'.lua'
    local pack = TKTexturePackerUtil.load ( spec, drawable.path )
    pack.resourceScaleFactor = drawable.resourceScaleFactor
-   return pack
+
+   local multiPack = TKTextureMultiPack:new () :init ()
+   multiPack:addTexturePack ( pack )
+   return multiPack
 end
 
 function loadTexture ( name, ext )
