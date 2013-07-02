@@ -106,6 +106,10 @@ function TKLayer:findPropById ( viewId )
    return self.viewCache [ viewId ]
 end
 
+function TKLayer:getMOAILayer ()
+   return self.layer
+end
+
 -- override methods
 function TKLayer:clear ()
    self.viewCache = {}
