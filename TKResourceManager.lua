@@ -48,23 +48,23 @@ function loadExistingResource ( foundDirs, sortedKeys, name, ext )
       local path = resourceDir .. name .. '.lua'
       if MOAIFileSystem.checkFileExists ( path ) then
 	 local drawablePath = resourceDir .. name .. ext
-	 local tbl = TKTexturePackerUtil.load ( path, drawablePath )
-	 tbl.resourceScaleFactor = resourceScaleFactor
+	 local textureTable = TKTexturePackerUtil.load ( path, drawablePath )
+	 textureTable.resourceScaleFactor = resourceScaleFactor
 	 local multiPack = TKTexturePack:new () :init ()
-	 multiPack:addTextureTable ( tbl )
+	 multiPack:addTextureTable ( textureTable )
 	 return multiPack
       end
 
       -- load multi pack
       local packParts = {}
+      local multiPack = TKTexturePack:new () :init ()
       for i = 1, MAX_TEXTURE_PARTS do
-	 local multiPack = TKTexturePack:new () :init ()
 	 path = resourceDir .. name .. '-part' .. tostring ( i ) .. '.lua'
 	 local drawablePath = resourceDir .. name .. '-part' .. tostring ( i ) .. ext
 	 if MOAIFileSystem.checkFileExists ( path ) then
-	    local pack = TKTexturePackerUtil.load ( path, drawablePath )
-	    pack.resourceScaleFactor = resourceScaleFactor
-	    multiPack:addTextureTable ( pack )
+	    local textureTable = TKTexturePackerUtil.load ( path, drawablePath )
+	    textureTable.resourceScaleFactor = resourceScaleFactor
+	    multiPack:addTextureTable ( textureTable )
 	 else
 	    if i > 1 then
 	       return multiPack

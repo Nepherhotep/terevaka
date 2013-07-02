@@ -3,7 +3,6 @@ module(..., package.seeall)
 
 function load( lua, png )
    local textureTable = {}
-   print ( lua, png )
    local frames = dofile ( lua ).frames
    textureTable.texture = MOAITexture.new ()
    textureTable.texture:load ( png )

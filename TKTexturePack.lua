@@ -1,24 +1,24 @@
 module(..., package.seeall)
 
-TKTextureMultiPack = {}
+TKTexturePack = {}
 
-function TKTextureMultiPack:new ( o )
+function TKTexturePack:new ( o )
    o = o or {}
    setmetatable ( o, self )
    self.__index = self
    return o
 end
 
-function TKTextureMultiPack:init ()
+function TKTexturePack:init ()
    self.textureTables = {}
    return self
 end
 
-function TKTextureMultiPack:addTextureTable ( pack )
-   table.insert ( self.textureTables, pack )
+function TKTexturePack:addTextureTable ( tbl )
+   table.insert ( self.textureTables, tbl )
 end
 
-function TKTextureMultiPack:getFrameInfo ( frameName )
+function TKTexturePack:getFrameInfo ( frameName )
    for i, tbl in ipairs ( self.textureTables ) do
       if tbl.spriteNames [ frameName ] then
 	 local frameInfo = {}
@@ -31,11 +31,11 @@ function TKTextureMultiPack:getFrameInfo ( frameName )
    end
 end
 
-function TKTextureMultiPack:release ()
+function TKTexturePack:release ()
    for i, tbl in ipairs ( self.textureTables ) do
       tbl.texture:release ()
    end
    self.textureTables = {}
 end
 
-return TKTextureMultiPack
+return TKTexturePack
