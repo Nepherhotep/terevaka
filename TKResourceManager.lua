@@ -7,6 +7,7 @@ local TKTexturePack = require ( 'terevaka/TKTexturePack' )
 
 local MAX_TEXTURE_PARTS = 10
 
+
 function loadDrawable ( name, ext )
    local ext = ext or '.png'
    local dirs = MOAIFileSystem.listDirectories ( 'res' )
@@ -42,28 +43,26 @@ function loadExistingResource ( foundDirs, sortedKeys, name, ext )
    for i, key in ipairs ( sortedKeys ) do
       local resourceDir = 'res/' .. foundDirs [ tostring ( key )] .. '/'
       local resourceScaleFactor = TKScreen.SCREEN_HEIGHT / key
+
       -- load texture pack
       local path = resourceDir .. name .. '.lua'
-
       if MOAIFileSystem.checkFileExists ( path ) then
 	 local drawablePath = resourceDir .. name .. ext
-	 local pack = TKTexturePackerUtil.load ( spec, drawablePath )
-	 pack.resourceScaleFactor = resourceScaleFactor
-	 
+	 local tbl = TKTexturePackerUtil.load ( path, drawablePath )
+	 tbl.resourceScaleFactor = resourceScaleFactor
 	 local multiPack = TKTexturePack:new () :init ()
-	 multiPack:addTextureTable ( pack )
+	 multiPack:addTextureTable ( tbl )
 	 return multiPack
       end
-      
+
       -- load multi pack
       local packParts = {}
-      
       for i = 1, MAX_TEXTURE_PARTS do
 	 local multiPack = TKTexturePack:new () :init ()
 	 path = resourceDir .. name .. '-part' .. tostring ( i ) .. '.lua'
 	 local drawablePath = resourceDir .. name .. '-part' .. tostring ( i ) .. ext
 	 if MOAIFileSystem.checkFileExists ( path ) then
-	    local pack = TKTexturePackerUtil.load ( spec, drawablePath )
+	    local pack = TKTexturePackerUtil.load ( path, drawablePath )
 	    pack.resourceScaleFactor = resourceScaleFactor
 	    multiPack:addTextureTable ( pack )
 	 else
