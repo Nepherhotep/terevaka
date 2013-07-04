@@ -79,7 +79,7 @@ function loadExistingResource ( foundDirs, sortedKeys, name, ext )
       if MOAIFileSystem.checkFileExists ( path ) then
 	 local texture = MOAITexture.new ()
 	 texture:load ( path, MOAIImage.PREMULTIPLY_ALPHA )
-	 texture.resourceScaleFactor = drawable.resourceScaleFactor
+	 texture.resourceScaleFactor = resourceScaleFactor
 	 return texture
       end
    end
