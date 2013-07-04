@@ -33,7 +33,7 @@ Applicaction directory structure
 terevaka.TKResourceManager
 ---------
 
-terevaka.TKResourceManager.loadTexturePack('main') will try to load texture pack 'main.lua' according to best match with res/drawable-h<height>px
+terevaka.TKResourceManager.loadTexturePack('main') will try to load texture pack 'main.lua' according to best match with res/drawable-h(HEIGHT)px
 
 
 terevaka.TKLayer
