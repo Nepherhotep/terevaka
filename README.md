@@ -36,10 +36,10 @@ terevaka.TKResourceManager
 terevaka.TKResourceManager.loadTexturePack('main') will try to load texture pack 'main.lua' according to best match with res/drawable-h<height>px
 
 
-terevaka.TKScene
+terevaka.TKLayer
 ---------
 
-Call self:fillLayer(self.layer, self.texturePack, 'main-layout') method to populate self.layer
+Call layer:fill ({ resourceName='main-layout', texturePack = self.texturePack }) method to populate layer
 with sprites from self.texturePack using "res/layout/main-layout.lua" file (file built using terevaka-ui-builder).
 
 Testing multiple devices
