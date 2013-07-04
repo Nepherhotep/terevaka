@@ -51,7 +51,7 @@ Instead of uploading moai on a real device, you can test application appearance 
 Application onCreate/onStart/onResume methods
 --------
 
-They a done as a prototype. All of them are called on application start. onPause/onResume events are not implemented yet, but will be added in the nearest future.
+Use these methods to initialize/release resource on application creation, pausing or resuming
 
 Sample
 --------
