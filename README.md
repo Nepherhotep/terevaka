@@ -51,7 +51,7 @@ Instead of uploading moai on a real device, you can test application appearance 
 Application onCreate/onStart/onResume methods
 --------
 
-Use these methods to initialize/release resource on application creation, pausing or resuming
+Use these methods to initialize/release resources on application creation, pausing or resuming
 
 Sample
 --------
