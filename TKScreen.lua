@@ -4,9 +4,9 @@ local math = require ( 'math' )
 
 local TKTapEvent = require ( 'terevaka/TKTapEvent' )
 
-DEFAULT_DPI = 160
-SCREEN_WIDTH = MOAIEnvironment.horizontalResolution or 480
-SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 320
+DEFAULT_DPI = 132
+SCREEN_WIDTH = MOAIEnvironment.horizontalResolution or 1024
+SCREEN_HEIGHT = MOAIEnvironment.verticalResolution or 768
 SCREEN_DPI = MOAIEnvironment.screenDpi or DEFAULT_DPI
 
 -- Trunk dpi to prevent stairs-like scaling
