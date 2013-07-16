@@ -21,7 +21,7 @@ function TKPortraitLayer:scaledToAbsolute ( x, y, v_align )
             verticalOffset = 0
         else
             if v_align == 'top' then
-                verticalOffset = ( TKScreen.SCREEN_HEIGHT - scaleFactor * self.layouHeight )
+                verticalOffset = ( TKScreen.SCREEN_HEIGHT - scaleFactor * self.layoutHeight )
             else
                 verticalOffset = y * ( TKScreen.SCREEN_HEIGHT / self.layoutHeight - scaleFactor )
             end
