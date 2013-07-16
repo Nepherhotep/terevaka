@@ -1,6 +1,7 @@
 module(..., package.seeall)
 
 local TKLayer = require ( 'terevaka/TKLayer' )
+local TKScreen = require ( 'terevaka/TKScreen' )
 
 
 TKPortraitLayer = TKLayer:new ()
