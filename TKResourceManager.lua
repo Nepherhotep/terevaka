@@ -10,23 +10,44 @@ local MAX_TEXTURE_PARTS = 10
 
 function loadDrawable ( name, ext )
     local ext = ext or '.png'
-    local dirs = MOAIFileSystem.listDirectories ( 'res' )
     local foundDirs = {}
     local lesserKeys = {}
     local largerKeys = {}
     local sortedKeys = {}
+    local screenSize, resourceSize
+
+    -- look for height-based resources
     for i, dir in pairs ( MOAIFileSystem.listDirectories ( 'res' )) do
-        fist, last, sub = string.find ( dir, 'drawable[-]h(%d+)px' )
+        local first, last, sub = string.find ( dir, 'drawable[-]h(%d+)px' )
         if sub then
+            screenSize = TKScreen.SCREEN_HEIGHT
             local height = tonumber ( sub )
             foundDirs [ sub ] = dir
-            if height < TKScreen.SCREEN_HEIGHT then
+            if height < screenSize then
                 table.insert ( lesserKeys, height )
             else
                 table.insert ( largerKeys, height )
             end
         end
     end
+
+    -- look for width-based resources if height-based not found
+    if #foundDirs == 0 then
+        for i, dir in pairs ( MOAIFileSystem.listDirectories ( 'res' )) do
+            local first, last, sub = string.find ( dir, 'drawable[-]w(%d+)px' )
+            if sub then
+                screenSize = TKScreen.SCREEN_WIDTH
+                local width = tonumber ( sub )
+                foundDirs [ sub ] = dir
+                if width < screenSize then
+                    table.insert ( lesserKeys, width )
+                else
+                    table.insert ( largerKeys, width )
+                end
+            end
+        end
+    end
+
     table.sort ( largerKeys ) -- sort in incrementing order
     table.sort ( lesserKeys, function  ( a, b ) return a < b end ) -- sort in decrementing order
 
@@ -36,13 +57,13 @@ function loadDrawable ( name, ext )
     for i, key in ipairs ( lesserKeys ) do
         table.insert ( sortedKeys, key )
     end
-    return loadExistingResource ( foundDirs, sortedKeys, name, ext )
+    return loadExistingResource ( foundDirs, sortedKeys, screenSize, name, ext )
 end
 
-function loadExistingResource ( foundDirs, sortedKeys, name, ext )
+function loadExistingResource ( foundDirs, sortedKeys, screenSize, name, ext )
     for i, key in ipairs ( sortedKeys ) do
         local resourceDir = 'res/' .. foundDirs [ tostring ( key )] .. '/'
-        local resourceScaleFactor = TKScreen.SCREEN_HEIGHT / key
+        local resourceScaleFactor = screenSize / key
 
         -- load texture pack
         local path = resourceDir .. name .. '.lua'
