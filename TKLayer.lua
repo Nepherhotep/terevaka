@@ -63,7 +63,7 @@ function TKLayer:addScalableProp ( params )
     prop:setDeck ( deck )
     prop:setIndex ( index )
 
-    local x, y = self:scaledToAbsolute ( propTable.x, propTable.y, propTable.h_align )
+    local x, y = self:absoluteLocFromPropTable ( propTable )
 
     prop:setLoc ( x, y )
     prop:setScl ( resourceScaleFactor )
@@ -73,6 +73,10 @@ function TKLayer:addScalableProp ( params )
     self.layer:insertProp ( prop )
     self:cacheView ( propTable.uid, prop )
     return prop
+end
+
+function TKLayer:absoluteLocFromPropTable ( propTable )
+    return self:scaledToAbsolute ( propTable.x, propTable.y, propTable.h_align )
 end
 
 function TKLayer:scaledToAbsolute ( x, y, h_align )
