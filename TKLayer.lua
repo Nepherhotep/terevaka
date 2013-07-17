@@ -10,7 +10,7 @@ function TKLayer:new ( o )
     o = o or {}
     setmetatable ( o, self )
     self.__index = self
-    o:proxyNativeLayer ({ 'setViewport', 'insertProp', 'removeProp', 'getPartition', 'wndToWorld' })
+    o:proxyNativeLayer ({ 'setViewport', 'insertProp', 'removeProp', 'getPartition', 'wndToWorld', 'setBox2DWorld' })
     return o
 end
 
