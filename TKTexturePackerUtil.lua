@@ -40,16 +40,16 @@ function load( lua, png )
    end
    
    -- Construct the deck
-   textureTable.quads = MOAIGfxQuadDeck2D.new ()
-   textureTable.quads:setTexture ( textureTable.texture )
-   textureTable.quads:reserve ( #frames )
+   textureTable.deck = MOAIGfxQuadDeck2D.new ()
+   textureTable.deck:setTexture ( textureTable.texture )
+   textureTable.deck:reserve ( #frames )
    local names = {}
    for i, frame in ipairs ( frames ) do
       local q = frame.uvQuad
       local r = frame.geomRect
       names[frame.name] = i
-      textureTable.quads:setUVQuad ( i, q.x0,q.y0, q.x1,q.y1, q.x2,q.y2, q.x3,q.y3 )
-      textureTable.quads:setRect ( i, r.x0,r.y0, r.x1,r.y1 )
+      textureTable.deck:setUVQuad ( i, q.x0,q.y0, q.x1,q.y1, q.x2,q.y2, q.x3,q.y3 )
+      textureTable.deck:setRect ( i, r.x0,r.y0, r.x1,r.y1 )
    end
    
    textureTable.spriteNames = names

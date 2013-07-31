@@ -23,7 +23,7 @@ function TKTexturePack:getFrameInfo ( frameName )
       if tbl.spriteNames [ frameName ] then
 	 local frameInfo = {}
 	 frameInfo.frameName = frameName
-	 frameInfo.quads = tbl.quads
+	 frameInfo.deck = tbl.deck
 	 frameInfo.resourceScaleFactor = tbl.resourceScaleFactor
 	 frameInfo.index = tbl.spriteNames [ frameName ]
 	 return frameInfo

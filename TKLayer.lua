@@ -43,7 +43,7 @@ function TKLayer:fillScalableLayout ( params )
         if params.texturePack then
             local frameInfo = params.texturePack:getFrameInfo ( propTable.name )
             params.index = frameInfo.index
-            params.deck = frameInfo.quads
+            params.deck = frameInfo.deck
             params.resourceScaleFactor = frameInfo.resourceScaleFactor
         end
         params.propTable = propTable
