@@ -6,8 +6,7 @@ function load( lua, png )
    local frames = dofile ( lua ).frames
    textureTable.texture = MOAITexture.new ()
    textureTable.texture:load ( png )
-   local xtex, ytex = textureTable.texture:getSize ()
-   
+
    -- Annotate the frame array with uv quads and geometry rects
    for i, frame in ipairs ( frames ) do
         -- convert frame.uvRect to frame.uvQuad to handle rotation

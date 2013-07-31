@@ -2,6 +2,7 @@ module(..., package.seeall)
 
 TKScreen = require ( 'terevaka/TKScreen' )
 TKLayer = require ( 'terevaka/TKLayer' )
+TKPortraitLayer = require ( 'terevaka/TKPortraitLayer' )
 TKResourceManager = require ( 'terevaka/TKResourceManager' )
 TKApplication = require ( 'terevaka/TKApplication' )
 TKPropUtil = require ( 'terevaka/TKPropUtil' )
