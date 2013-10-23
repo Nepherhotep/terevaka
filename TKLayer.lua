@@ -11,7 +11,7 @@ function TKLayer:new ( o )
     setmetatable ( o, self )
     self.__index = self
     o:proxyNativeLayer ({ 'setViewport', 'insertProp', 'removeProp', 'getPartition', 'wndToWorld', 'setBox2DWorld',
-        'setCamera' })
+        'setCamera', 'setParallax' })
     return o
 end
 
