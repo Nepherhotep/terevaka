@@ -19,10 +19,13 @@ function TKScene:init ()
 end
 
 function TKScene:handleTouch ( layer, event )
-    local prop = layer:getPartition () :propForPoint ( layer:wndToWorld ( event.wndX, event.wndY ))
-    if prop then
-        if prop.onTouch then
-            return prop:onTouch ( event )
+    local props = {layer:getPartition () :propListForPoint ( layer:wndToWorld ( event.wndX, event.wndY ))}
+    for i = 1, #props do
+        local prop = props [ i ]
+        if prop then
+            if prop.onTouch then
+                return prop:onTouch ( event )
+            end
         end
     end
 end
