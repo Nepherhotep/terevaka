@@ -36,8 +36,8 @@ function TKScene:getRenderTable ()
     return {}
 end
 
-function TKScene:onLoadScene ()
-    print ( 'Override TKScene:onLoadScene ()' )
+function TKScene:onLoadScene ( params )
+    print ( 'Override TKScene:onLoadScene ( params )' )
 end
 
 function TKScene:onRemoveScene ()

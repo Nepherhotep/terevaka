@@ -33,27 +33,27 @@ function TKApplication:setupSim ()
     self:subscribeTouches ()
 end
 
-function TKApplication:initWithScene( scene )
+function TKApplication:initWithScene( scene, loadSceneParams )
     -- User constructor
     self:setupSim ()
     self:onCreate ()
-    self:loadScene ( scene )
+    self:loadScene ( scene, loadSceneParams )
     self:onResume()
     return self
 end
 
-function TKApplication:loadScene ( scene )
+function TKApplication:loadScene ( scene, loadSceneParams )
     self.currentScene = scene
     for i, layer in pairs ( scene:getRenderTable ()) do
         layer:setViewport ( self.viewport )
     end
     MOAIRenderMgr.setRenderTable ( scene:getRenderTable ())
-    scene:onLoadScene ()
+    scene:onLoadScene ( loadSceneParams )
 end
 
-function TKApplication:replaceScene ( scene )
+function TKApplication:replaceScene ( scene, loadSceneParams )
     self.currentScene:onRemoveScene ()
-    self:loadScene ( scene )
+    self:loadScene ( scene, loadSceneParams )
 end
 
 function TKApplication:subscribeTouches ()
