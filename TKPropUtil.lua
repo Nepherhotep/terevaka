@@ -55,6 +55,7 @@ function replaceProp ( layer, propId, frame, texturePack )
     newProp:setScl ( resourceScaleFactor )
     newProp:setPriority ( priority )
     newProp:setScl ( scaleX, scaleY )
+    newProp.onTouch = prop.onTouch
 
     layer:removeProp ( prop )
     layer:insertProp ( newProp )
