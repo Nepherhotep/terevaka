@@ -24,7 +24,7 @@ end
 function TKLayer:proxyNativeLayer ( methods )
     for i, method in ipairs ( methods ) do
         self.__index [ method ] = function ( self, ... )
-            return self.layer [ method ] ( self.layer, unpack ( arg ))
+            return self.layer [ method ] ( self.layer, unpack ({ ... }))
         end
     end
 end
